@@ -23,11 +23,11 @@ class StatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         if RouteManager.sharedInstance.getRoute() != nil {
             plannedRoute = RouteManager.sharedInstance.getRoute()
-            statusField.text = plannedRoute![0].summary
-            statusField.text = "TEST"
+            statusField.text = "Route is loaded"
+//            statusField.text = plannedRoute![0].summary
+//            statusField.text = "TEST"
         }
         // Do any additional setup after loading the view, typically from a nib.
     }

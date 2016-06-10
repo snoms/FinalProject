@@ -74,13 +74,10 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
                 print(plannedRoute![0].legs[0].steps.count)
                 print(plannedRoute?.description)
             }
-            
         }
         else {
             print("error in viewdidload if let")
         }
-
-        
         tableView.reloadData()
     }
     
@@ -108,9 +105,7 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
 //            cell.accessoryType = UITableViewCellAccessoryType.None
 //            cell.backgroundColor = clearColor
 //        }
-        
         return cell
-        
         }
 //        else {
 //            print("error in cell creation")

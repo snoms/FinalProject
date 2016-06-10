@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  StatusViewController.swift
 //  Trip
 //
 //  Created by bob on 07/06/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class StatusViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

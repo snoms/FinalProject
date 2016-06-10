@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        GMSServices.provideAPIKey(GoogleAPIkey)
+        
+        
+        // http://stackoverflow.com/questions/33008072/register-notification-in-ios-9
+        if application.respondsToSelector("registerUserNotificationSettings:") {
+            if #available(iOS 8.0, *) {
+                let types:UIUserNotificationType = ([.Alert, .Sound])
+                let settings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+                application.registerUserNotificationSettings(settings)
+                application.registerForRemoteNotifications()
+            } else {
+                application.registerForRemoteNotificationTypes([.Alert, .Sound])
+            }
+        }
+        else {
+            // Register for Push Notifications before iOS 8
+            application.registerForRemoteNotificationTypes([.Alert, .Sound])
+        }
+        
+        
         return true
     }
 
@@ -41,6 +62,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    var shouldSupportAllOrientation = false
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        if (shouldSupportAllOrientation == true){
+            return UIInterfaceOrientationMask.All
+        }
+        return UIInterfaceOrientationMask.Portrait
+    }
 
 }
 

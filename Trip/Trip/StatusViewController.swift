@@ -7,11 +7,28 @@
 //
 
 import UIKit
+import PXGoogleDirections
 
 class StatusViewController: UIViewController {
 
+    @IBOutlet weak var statusField: UILabel!
+    
+    @IBAction func updateStatus(sender: AnyObject) {
+        
+        
+    }
+    
+    var plannedRoute: [PXGoogleDirectionsRoute]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        if RouteManager.sharedInstance.getRoute() != nil {
+            plannedRoute = RouteManager.sharedInstance.getRoute()
+            statusField.text = plannedRoute![0].summary
+            statusField.text = "TEST"
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -19,7 +36,9 @@ class StatusViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.All
+    }
 
 }
 

@@ -39,16 +39,20 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedAlways {
-            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-                if CLLocationManager.isRangingAvailable() {
+            print("reached first if block")
+//            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
+//                print("reached second if block")
+//                if CLLocationManager.isRangingAvailable() {
+//                    print("reached third if block")
                     if let location1: CLLocation! = locationManager.location {
+                        print("reached inner if block")
                         let coordinate1: CLLocationCoordinate2D = location1!.coordinate
                         // ... proceed with the location and coordintes
                         directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
                     } else {
                         print("no location...")
-                    }
-                }
+//                    }
+//                }
             }
         }
     }
@@ -74,7 +78,8 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 //            } else {
 //                print("no location...")
 //            }
-            
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
             
 //            var curLoc = locationManager.location
             // continue

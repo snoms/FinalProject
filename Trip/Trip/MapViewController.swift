@@ -23,18 +23,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         appdelegate.shouldSupportAllOrientation = true
         // Do any additional setup after loading the view, typically from a nib.
             
-        let camera = GMSCameraPosition.cameraWithLatitude(-33.86,
-                                                          longitude: 151.20, zoom: 6)
+        let camera = GMSCameraPosition.cameraWithLatitude(52.370216,
+                                                          longitude: 4.895168, zoom: 10)
         let mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.myLocationEnabled = true
         self.view = mapView
         
         let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2DMake(-33.86, 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
+        marker.position = CLLocationCoordinate2DMake(52.370216, 4.895168)
+        marker.title = "Amsterdam"
+        marker.snippet = "The Netherlands"
         marker.map = mapView
-        
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()

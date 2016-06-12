@@ -18,7 +18,12 @@ class RouteManager {
     private var plannedRoute: [PXGoogleDirectionsRoute]?
     
     func getRoute() -> [PXGoogleDirectionsRoute]? {
-        return plannedRoute
+        if plannedRoute != nil {
+            return plannedRoute
+        }
+        else {
+            return nil
+        }
     }
     
     func setRoute(newRoute: [PXGoogleDirectionsRoute]) {

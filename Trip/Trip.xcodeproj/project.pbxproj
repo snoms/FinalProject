@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B63725CCB1346A6BCC8E4BF7 /* Pods_Trip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79EE9FCC3299E4039DD5349F /* Pods_Trip.framework */; };
+		CC51E22A1D0EEAAC00516AAE /* GeofenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC51E2291D0EEAAC00516AAE /* GeofenceManager.swift */; };
+		CC51E22C1D102B2E00516AAE /* TransitFence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC51E22B1D102B2E00516AAE /* TransitFence.swift */; };
 		CC878BE01D06EA4100C7F394 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */; };
 		CC878BE21D06EA4100C7F394 /* PlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */; };
 		CC878BE41D06EA4100C7F394 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BE31D06EA4100C7F394 /* StatusViewController.swift */; };
@@ -18,11 +20,12 @@
 		CC878C021D06EA4200C7F394 /* TripUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878C011D06EA4200C7F394 /* TripUITests.swift */; };
 		CC878C101D06EC0400C7F394 /* GoogleAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878C0F1D06EC0400C7F394 /* GoogleAPIKey.swift */; };
 		CC878C121D06EDF300C7F394 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878C111D06EDF300C7F394 /* MapViewController.swift */; };
-		CC878C141D06F7B300C7F394 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC878C131D06F7B300C7F394 /* GoogleMaps.bundle */; };
 		CC878C161D06F7BF00C7F394 /* PXGoogleDirections.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC878C151D06F7BF00C7F394 /* PXGoogleDirections.framework */; };
 		CC878C1C1D098F1200C7F394 /* JourneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878C1B1D098F1200C7F394 /* JourneyViewController.swift */; };
 		CC878C1E1D09903900C7F394 /* RouteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878C1D1D09903900C7F394 /* RouteManager.swift */; };
 		CC878C221D09A38A00C7F394 /* journeyStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878C211D09A38A00C7F394 /* journeyStepCell.swift */; };
+		CC8C217E1D0D9BE4004BEC21 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC8C217D1D0D9BE4004BEC21 /* GoogleMaps.framework */; };
+		CC8C21801D0D9DFE004BEC21 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC8C217F1D0D9DFE004BEC21 /* GoogleMaps.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,9 @@
 		758EB00DB663DEF6CD6209FB /* Pods-Trip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trip/Pods-Trip.release.xcconfig"; sourceTree = "<group>"; };
 		79EE9FCC3299E4039DD5349F /* Pods_Trip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93EE7837169C5E1832886480 /* Pods-Trip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trip/Pods-Trip.debug.xcconfig"; sourceTree = "<group>"; };
+		CC51E2271D0DA7C300516AAE /* GooglePlacesAutocomplete.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlacesAutocomplete.framework; path = "Pods/../build/Debug-iphoneos/GooglePlacesAutocomplete/GooglePlacesAutocomplete.framework"; sourceTree = "<group>"; };
+		CC51E2291D0EEAAC00516AAE /* GeofenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeofenceManager.swift; sourceTree = "<group>"; };
+		CC51E22B1D102B2E00516AAE /* TransitFence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitFence.swift; sourceTree = "<group>"; };
 		CC878BDC1D06EA4100C7F394 /* Trip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerViewController.swift; sourceTree = "<group>"; };
@@ -62,11 +68,12 @@
 		CC878C031D06EA4200C7F394 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC878C0F1D06EC0400C7F394 /* GoogleAPIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAPIKey.swift; sourceTree = "<group>"; };
 		CC878C111D06EDF300C7F394 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		CC878C131D06F7B300C7F394 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Pods/PXGoogleDirections/Dependencies/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		CC878C151D06F7BF00C7F394 /* PXGoogleDirections.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PXGoogleDirections.framework; path = "../../../Library/Developer/Xcode/DerivedData/Trip-cnwjuzjgdzvwakggxxijnwujwqtk/Build/Products/Debug-iphonesimulator/PXGoogleDirections/PXGoogleDirections.framework"; sourceTree = "<group>"; };
 		CC878C1B1D098F1200C7F394 /* JourneyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyViewController.swift; sourceTree = "<group>"; };
 		CC878C1D1D09903900C7F394 /* RouteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteManager.swift; sourceTree = "<group>"; };
 		CC878C211D09A38A00C7F394 /* journeyStepCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = journeyStepCell.swift; sourceTree = "<group>"; };
+		CC8C217D1D0D9BE4004BEC21 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Pods/PXGoogleDirections/Dependencies/GoogleMaps.framework; sourceTree = "<group>"; };
+		CC8C217F1D0D9DFE004BEC21 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Pods/PXGoogleDirections/Dependencies/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC8C217E1D0D9BE4004BEC21 /* GoogleMaps.framework in Frameworks */,
 				CC878C161D06F7BF00C7F394 /* PXGoogleDirections.framework in Frameworks */,
 				B63725CCB1346A6BCC8E4BF7 /* Pods_Trip.framework in Frameworks */,
 			);
@@ -131,8 +139,10 @@
 			isa = PBXGroup;
 			children = (
 				CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */,
+				CC51E22B1D102B2E00516AAE /* TransitFence.swift */,
 				CC878C0F1D06EC0400C7F394 /* GoogleAPIKey.swift */,
 				CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */,
+				CC51E2291D0EEAAC00516AAE /* GeofenceManager.swift */,
 				CC878C1D1D09903900C7F394 /* RouteManager.swift */,
 				CC878C1B1D098F1200C7F394 /* JourneyViewController.swift */,
 				CC878BE31D06EA4100C7F394 /* StatusViewController.swift */,
@@ -167,8 +177,10 @@
 		E46FCD95A76C6C3769C15BA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CC51E2271D0DA7C300516AAE /* GooglePlacesAutocomplete.framework */,
+				CC8C217F1D0D9DFE004BEC21 /* GoogleMaps.bundle */,
+				CC8C217D1D0D9BE4004BEC21 /* GoogleMaps.framework */,
 				CC878C151D06F7BF00C7F394 /* PXGoogleDirections.framework */,
-				CC878C131D06F7B300C7F394 /* GoogleMaps.bundle */,
 				79EE9FCC3299E4039DD5349F /* Pods_Trip.framework */,
 			);
 			name = Frameworks;
@@ -287,7 +299,7 @@
 				CC878BEC1D06EA4100C7F394 /* LaunchScreen.storyboard in Resources */,
 				CC878BE91D06EA4100C7F394 /* Assets.xcassets in Resources */,
 				CC878BE71D06EA4100C7F394 /* Main.storyboard in Resources */,
-				CC878C141D06F7B300C7F394 /* GoogleMaps.bundle in Resources */,
+				CC8C21801D0D9DFE004BEC21 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,9 +377,11 @@
 				CC878C101D06EC0400C7F394 /* GoogleAPIKey.swift in Sources */,
 				CC878BE01D06EA4100C7F394 /* AppDelegate.swift in Sources */,
 				CC878C121D06EDF300C7F394 /* MapViewController.swift in Sources */,
+				CC51E22A1D0EEAAC00516AAE /* GeofenceManager.swift in Sources */,
 				CC878BE21D06EA4100C7F394 /* PlannerViewController.swift in Sources */,
 				CC878C1E1D09903900C7F394 /* RouteManager.swift in Sources */,
 				CC878C1C1D098F1200C7F394 /* JourneyViewController.swift in Sources */,
+				CC51E22C1D102B2E00516AAE /* TransitFence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +529,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/PXGoogleDirections/Dependencies",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/GooglePlacesAutocomplete",
+				);
 				INFOPLIST_FILE = Trip/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -568,6 +587,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/PXGoogleDirections/Dependencies",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/GooglePlacesAutocomplete",
+				);
 				INFOPLIST_FILE = Trip/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

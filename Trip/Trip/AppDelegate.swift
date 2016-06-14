@@ -8,12 +8,13 @@
 
 import UIKit
 import GoogleMaps
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
-
+//    let locationManager = CLLocationManager()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -36,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotificationTypes([.Alert, .Sound])
         }
         
+        
+//        locationManager.delegate = self
+//        locationManager.requestAlwaysAuthorization()
         
         return true
     }
@@ -63,6 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     var shouldSupportAllOrientation = false
+    
     func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
         if (shouldSupportAllOrientation == true){
             return UIInterfaceOrientationMask.All
@@ -70,5 +75,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UIInterfaceOrientationMask.Portrait
     }
 
+    func handleRegionEvent(region: CLRegion!) {
+        print("Geofence triggered!")
+    }
+    
+    func regionWithGeotification(geotification: TransitFence) -> CLCircularRegion {
+        // 1
+        let region = CLCircularRegion(center: geotification.coordinate, radius: geotification.radius, identifier: geotification.identifier)
+        // 2
+//        region.notifyOnEntry = (geotification.eventType == .OnEntry)
+        region.notifyOnExit = !region.notifyOnEntry
+        return region
+    }
+    
+    func startMonitoringGeotification(geotification: TransitFence) {
+        // 1
+        if !CLLocationManager.isMonitoringAvailableForClass(CLCircularRegion) {
+//            showSimpleAlertWithTitle("Error", message: "Geofencing is not supported on this device!", viewController: self)
+            return
+        }
+        // 2
+        if CLLocationManager.authorizationStatus() != .AuthorizedAlways {
+//            showSimpleAlertWithTitle("Warning", message: "Your geotification is saved but will only be activated once you grant Geotify permission to access the device location.", viewController: self)
+        }
+        // 3
+        let region = regionWithGeotification(geotification)
+        // 4
+        locationManager.startMonitoringForRegion(region)
+    }
+    
+    
+    
+    
+    
+//    func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
+//        if region is CLCircularRegion {
+//            handleRegionEvent(region)
+//        }
+//    }
+//    
+//    func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
+//        if region is CLCircularRegion {
+//            handleRegionEvent(region)
+//        }
+//    }
+    
 }
 

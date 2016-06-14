@@ -35,6 +35,8 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
 //        else {
 //            print("error in viewdidload if let")
 //        }
+        
+        loadData()
         tableView.reloadData()
         
     }
@@ -44,14 +46,24 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
+    func loadData() {
+        if RouteManager.sharedInstance.getRoute() != nil {
+            plannedRoute = RouteManager.sharedInstance.getRoute()
+            print("route loaded")
+        }
+        else {
+            print("error, no route available yet")
+        }
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        print("CALLED NUMBER OF ROWS IN SECTION")
-        print(plannedRoute)
+//        print("CALLED NUMBER OF ROWS IN SECTION")
+//        print(plannedRoute)
         if (plannedRoute != nil) {
             print("cell count")
             print(plannedRoute![0].legs[0].steps.count)

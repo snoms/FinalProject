@@ -10,26 +10,32 @@ import UIKit
 import PXGoogleDirections
 import CoreLocation
 
+
+
 class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var fromField: UITextField!
     @IBOutlet weak var destField: UITextField!
     let directionsAPI = PXGoogleDirections(apiKey: GoogleAPIkey)
-    var locationManager: CLLocationManager!
+    var locationManager: CLLocationManager = CLLocationManager()
+    
+//    let gpaViewController = GooglePlacesAutocomplete(
+//        apiKey: GoogleAPIkey, placeType: .Address)
     
     override func viewDidLoad() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appdelegate.shouldSupportAllOrientation = false
-        super.viewDidLoad()
         
-        locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
-        
+    
         // Do any additional setup after loading the view, typically from a nib.
+        super.viewDidLoad()
+
         print("Loaded")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,16 +50,31 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 //                print("reached second if block")
 //                if CLLocationManager.isRangingAvailable() {
 //                    print("reached third if block")
-                    if let location1: CLLocation! = locationManager.location {
-                        print("reached inner if block")
-                        let coordinate1: CLLocationCoordinate2D = location1!.coordinate
-                        // ... proceed with the location and coordintes
-                        directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
-                    } else {
-                        print("no location...")
-//                    }
-//                }
-            }
+//                    if let location1: CLLocation! = locationManager.location {
+//                        print("reached inner if block")
+//                        let coordinate1: CLLocationCoordinate2D = location1.coordinate
+//                        // ... proceed with the location and coordintes
+//                        directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
+//                    } else {
+//                        print("no location...")
+////                    }
+////                }
+//            }
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location1:CLLocationCoordinate2D = (locations.last?.coordinate)!
+        print("locations = \(location1.latitude) \(location1.longitude)")
+        if let location1 = locationManager.location {
+            print("reached inner if block")
+            let coordinate1: CLLocationCoordinate2D = location1.coordinate
+            // ... proceed with the location and coordintes
+            directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
+        } else {
+            print("no location...")
+            //                    }
+            //                }
         }
     }
     
@@ -117,20 +138,32 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
                     print(routeleg.htmlInstructions!)
                 }
                 
+                for leg in routes[0].legs {
+                    for steps in leg.steps {
+                        if steps.transitDetails != nil {
+                            print(steps.transitDetails?.arrivalStop?.location?.latitude)
+                            
+                            if CLLocationManager.isMonitoringAvailableForClass(CLCircularRegion) {
+                                if CLLocationManager.authorizationStatus() == .AuthorizedAlways {
+                                    
+                                    if let newRegion: CLCircularRegion = CLCircularRegion(center: (steps.transitDetails?.arrivalStop?.location)!, radius: 100.0, identifier: (steps.transitDetails?.arrivalStop?.description!)!) {
+                                        newRegion.notifyOnEntry = true
+                                        newRegion.notifyOnExit = false
+                                        self.locationManager.startMonitoringForRegion(newRegion)
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                
+                
                 break
             }
         })
 
         }
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
 }

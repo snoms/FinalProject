@@ -84,7 +84,7 @@
       <AdditionalOptions>
       </AdditionalOptions>
       <LocationScenarioReference
-         identifier = "../lijn326-track.gpx"
+         identifier = "../Dir.gpx"
          referenceType = "0">
       </LocationScenarioReference>
    </LaunchAction>

@@ -1,12 +1,15 @@
 PODS:
   - PXGoogleDirections (1.2.3)
+  - SwiftLocation (0.9.0)
 
 DEPENDENCIES:
   - PXGoogleDirections
+  - SwiftLocation
 
 SPEC CHECKSUMS:
   PXGoogleDirections: 26fae74aad9e8ea697a902f3655b33d0e6ce9834
+  SwiftLocation: f18e71300a89f2a81001c9615b7694150e6b84de
 
-PODFILE CHECKSUM: 9cd01a26b0a46b7396f6a9263b1cab6752fc5e7c
+PODFILE CHECKSUM: 4c63384080fa9e7d132117dce3118cdf320a9f57
 
 COCOAPODS: 1.0.0

@@ -5,6 +5,12 @@
       location = "group:Dir.gpx">
    </FileRef>
    <FileRef
+      location = "group:GpsiesTrack-3.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:GpsiesTrack-2.gpx">
+   </FileRef>
+   <FileRef
       location = "group:Trip.xcodeproj">
    </FileRef>
    <FileRef

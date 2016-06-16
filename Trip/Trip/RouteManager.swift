@@ -9,6 +9,7 @@
 import Foundation
 import PXGoogleDirections
 import CoreLocation
+import SwiftLocation
 
 class RouteManager {
     
@@ -18,7 +19,9 @@ class RouteManager {
     
     private var plannedRoute: [PXGoogleDirectionsRoute]?
     
-    private var transitFences: [TransitFence]?
+    private var transitFences: [TransitFence]? = []
+    
+    private var fenceRegions: [RegionRequest]? = []
     
     func getRoute() -> [PXGoogleDirectionsRoute]? {
         if plannedRoute != nil {
@@ -31,16 +34,72 @@ class RouteManager {
     
     func setRoute(newRoute: [PXGoogleDirectionsRoute]) {
         plannedRoute = newRoute
-        appendFences()
+        detectTransitStops()
+        startMonitoring()
+        startFenceMonitors()
     }
     
-    func appendFences() {
+    func appendFence(transitFence: TransitFence) {
         if plannedRoute != nil {
-            print(plannedRoute![plannedRoute!.startIndex].legs[plannedRoute!.startIndex])
+            print("append")
+//            print(getRoute()!.first!.legs.first!.steps.first!.transitDetails)
+            print("transitfence:\(transitFence)")
+            print("transitfenceID: \(transitFence.stop)")
+            print(RouteManager.sharedInstance.transitFences)
+            RouteManager.sharedInstance.transitFences?.append(transitFence)
+            print("appended")
+            print("first fence: \(RouteManager.sharedInstance.transitFences?.first?.stop)")
+        }
+        else {
+            print("no route to append fence")
         }
     }
     
+    func detectTransitStops() {
+        if getRoute() != nil {
+            for (index, step) in ((getRoute()?.first!.legs.first!.steps)?.enumerate())! {
+                if step.transitDetails != nil {
+                    if step.travelMode == PXGoogleDirectionsMode.Transit {
+                        print("transit point found")
+                        //                    appendFence
+                        let newFence = TransitFence(coordinate: step.transitDetails!.arrivalStop!.location!, radius: 250.00, identifier: index, stop: (step.transitDetails!.arrivalStop?.description)!)
+                        appendFence(newFence)
+                    }
+                }
+            }
+        }
+    }
     
+    func startMonitoring() {
+        if transitFences != nil {
+            print("this = \(transitFences!.first!.stop))")
+            for fence in transitFences! {
+                do {
+                    print("equal to =\(fence.stop)")
+                    let newfence = try BeaconManager.shared.monitorGeographicRegion(fence.stop, centeredAt: fence.coordinate, radius: fence.radius, onEnter: { temp in
+                            print("entered region\(fence.stop)")
+                            print(temp)
+                        }, onExit: { temp2 in
+                            print("left region \(fence.stop)")
+                            print(temp2)
+                    })
+
+                    fenceRegions!.append(newfence)
+                    print("started monitoring")
+                    print("Firstfenceprint: \(fenceRegions!.first)")
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+
+
+    func startFenceMonitors() {
+        for fence in transitFences! {
+            regionWithGeotification(fence)
+        }
+    }
 
     func getTransitFences() -> [TransitFence]? {
         if transitFences != nil {
@@ -53,7 +112,7 @@ class RouteManager {
     
     func regionWithGeotification(geotification: TransitFence) -> CLCircularRegion {
         // 1
-        let region = CLCircularRegion(center: geotification.coordinate, radius: geotification.radius, identifier: geotification.identifier)
+        let region = CLCircularRegion(center: geotification.coordinate, radius: geotification.radius, identifier: geotification.stop)
         // 2
         region.notifyOnEntry = true
 //        region.notifyOnExit = !region.notifyOnEntry

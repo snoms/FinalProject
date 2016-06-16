@@ -9,15 +9,14 @@
 import UIKit
 import PXGoogleDirections
 import CoreLocation
-
-
+import SwiftLocation
 
 class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var fromField: UITextField!
     @IBOutlet weak var destField: UITextField!
     let directionsAPI = PXGoogleDirections(apiKey: GoogleAPIkey)
-    var locationManager: CLLocationManager = CLLocationManager()
+//    var locationManager: CLLocationManager = CLLocationManager()
     
 //    let gpaViewController = GooglePlacesAutocomplete(
 //        apiKey: GoogleAPIkey, placeType: .Address)
@@ -26,63 +25,77 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appdelegate.shouldSupportAllOrientation = false
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestAlwaysAuthorization()
+//        locationManager.startUpdatingLocation()
     
+        directionsAPI.mode = PXGoogleDirectionsMode.Transit
+
         // Do any additional setup after loading the view, typically from a nib.
+        
+        LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
+            print(location.coordinate)
+            print("success")
+            self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
+        }) { error in
+            print("error in getting location")
+            print(error)
+        }
+//        locRequest.start()
+//        locRequest.onSuccess { (location) in
+//            self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
+//        }
+//        locRequest.stop()
+        print("Loaded")
         super.viewDidLoad()
 
-        print("Loaded")
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedAlways {
-            print("reached first if block")
-//            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-//                print("reached second if block")
-//                if CLLocationManager.isRangingAvailable() {
-//                    print("reached third if block")
-//                    if let location1: CLLocation! = locationManager.location {
-//                        print("reached inner if block")
-//                        let coordinate1: CLLocationCoordinate2D = location1.coordinate
-//                        // ... proceed with the location and coordintes
-//                        directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
-//                    } else {
-//                        print("no location...")
-////                    }
-////                }
-//            }
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location1:CLLocationCoordinate2D = (locations.last?.coordinate)!
-        print("locations = \(location1.latitude) \(location1.longitude)")
-        if let location1 = locationManager.location {
-            print("reached inner if block")
-            let coordinate1: CLLocationCoordinate2D = location1.coordinate
-            // ... proceed with the location and coordintes
-            directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
-        } else {
-            print("no location...")
-            //                    }
-            //                }
-        }
-    }
+//
+//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        if status == .AuthorizedAlways {
+//            print("reached first if block")
+////            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
+////                print("reached second if block")
+////                if CLLocationManager.isRangingAvailable() {
+////                    print("reached third if block")
+////                    if let location1: CLLocation! = locationManager.location {
+////                        print("reached inner if block")
+////                        let coordinate1: CLLocationCoordinate2D = location1.coordinate
+////                        // ... proceed with the location and coordintes
+////                        directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
+////                    } else {
+////                        print("no location...")
+//////                    }
+//////                }
+////            }
+//        }
+//    }
+////    
+////    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        let location1:CLLocationCoordinate2D = (locations.last?.coordinate)!
+//        print("locations = \(location1.latitude) \(location1.longitude)")
+//        if let location1: CLLocation! = locationManager.location {
+//            print("reached inner if block")
+//            let coordinate1: CLLocationCoordinate2D = location1!.coordinate
+//            // ... proceed with the location and coordintes
+//            directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
+//        } else {
+//            print("no location...")
+//            //                    }
+//            //                }
+//        }
+//    }
     
     
     
     
     @IBAction func planTrip(sender: AnyObject) {
-        directionsAPI.mode = PXGoogleDirectionsMode.Transit
         
         //        directionsAPI.departureTime = PXGoogleDirectionsTime
         //        PXGoo
@@ -98,9 +111,9 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 //
 //            } else {
 //                print("no location...")
-//            }
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
+////            }
+//            locationManager.requestAlwaysAuthorization()
+//            locationManager.startUpdatingLocation()
             
 //            var curLoc = locationManager.location
             // continue
@@ -138,28 +151,29 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
                     print(routeleg.htmlInstructions!)
                 }
                 
-                for leg in routes[0].legs {
-                    for steps in leg.steps {
-                        if steps.transitDetails != nil {
-                            print(steps.transitDetails?.arrivalStop?.location?.latitude)
-                            
-                            if CLLocationManager.isMonitoringAvailableForClass(CLCircularRegion) {
-                                if CLLocationManager.authorizationStatus() == .AuthorizedAlways {
-                                    
-                                    if let newRegion: CLCircularRegion = CLCircularRegion(center: (steps.transitDetails?.arrivalStop?.location)!, radius: 100.0, identifier: (steps.transitDetails?.arrivalStop?.description!)!) {
-                                        newRegion.notifyOnEntry = true
-                                        newRegion.notifyOnExit = false
-                                        self.locationManager.startMonitoringForRegion(newRegion)
-                                    }
-                                    
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                
-                
+//                for leg in routes[0].legs {
+//                    for steps in leg.steps {
+//                        if steps.transitDetails != nil {
+//                            print(steps.transitDetails?.arrivalStop?.location?.latitude)
+////                            print("huge loop1")
+//                            if CLLocationManager.isMonitoringAvailableForClass(CLCircularRegion) {
+//                                if CLLocationManager.authorizationStatus() == .AuthorizedAlways {
+////                                    print("huge loop2")
+//                                    if let newRegion: CLCircularRegion = CLCircularRegion(center: (steps.transitDetails?.arrivalStop?.location)!, radius: 100.0, identifier: (steps.transitDetails?.arrivalStop?.description!)!) {
+//                                        newRegion.notifyOnEntry = true
+//                                        newRegion.notifyOnExit = false
+//                                        self.locationManager.startMonitoringForRegion(newRegion)
+////                                        print("huge loop3")
+//                                    }
+//                                    
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                
+//                
                 break
             }
         })

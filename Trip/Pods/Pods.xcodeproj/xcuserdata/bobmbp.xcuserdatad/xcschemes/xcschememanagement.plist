@@ -19,20 +19,30 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftLocation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2AF1FF14FE10E59CFC06D25F2CFCACBB</key>
+		<key>01B531BB66530CE2D561D8FCF6672D3B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F282A3D0AB2758DEA5835964185840C4</key>
+		<key>0C2AAB03CF3CE8A5993797059C97300A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FB58B0A05928B1765BA1E2C3BB892381</key>
+		<key>79E30028579748F8BF675383D64B3516</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6199DF14304B0CDA619B9850B22CB37</key>
 		<dict>
 			<key>primary</key>
 			<true/>

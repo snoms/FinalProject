@@ -77,8 +77,30 @@ class RouteManager {
                 do {
                     print("equal to =\(fence.stop)")
                     let newfence = try BeaconManager.shared.monitorGeographicRegion(fence.stop, centeredAt: fence.coordinate, radius: fence.radius, onEnter: { temp in
+                        
+                        let nc = NSNotificationCenter.defaultCenter()
+                        nc.postNotificationName("fenceProx", object: nil, userInfo: ["message":fence.stop])
+                        
+                        
+//                        NSNotificationCenter.defaultCenter().postNotificationName("fenceProx", object: fence)
+                        
+                        
+                        
+                        let alert = UIAlertController(title: "Alert!", message: "You're getting close to \(fence.stop). Prepare to disembark!", preferredStyle: .Alert)
+                                                // Grab the value from the text field, and print it when the user clicks OK.
+                        let OKAction = UIAlertAction(title: "Got it!", style: .Default) { (action:UIAlertAction!) in
+                        }
+                        alert.addAction(OKAction)
+
+//                        self.presentViewController(alert, animated: true, completion: nil)
+
+                        
                             print("entered region\(fence.stop)")
                             print(temp)
+                        
+                        
+                        
+                        
                         }, onExit: { temp2 in
                             print("left region \(fence.stop)")
                             print(temp2)
@@ -94,7 +116,13 @@ class RouteManager {
         }
     }
 
+    func methodOfReceivedNotification(notification: NSNotification){
+        //Take Action on Notification
+        print("notification received!")
+    }
 
+    
+    
     func startFenceMonitors() {
         for fence in transitFences! {
             regionWithGeotification(fence)

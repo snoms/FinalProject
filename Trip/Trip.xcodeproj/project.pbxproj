@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B63725CCB1346A6BCC8E4BF7 /* Pods_Trip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79EE9FCC3299E4039DD5349F /* Pods_Trip.framework */; };
-		CC51E22A1D0EEAAC00516AAE /* GeofenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC51E2291D0EEAAC00516AAE /* GeofenceManager.swift */; };
 		CC51E22C1D102B2E00516AAE /* TransitFence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC51E22B1D102B2E00516AAE /* TransitFence.swift */; };
 		CC51E22E1D103C1C00516AAE /* BadLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC51E22D1D103C1C00516AAE /* BadLocationManager.swift */; };
 		CC878BE01D06EA4100C7F394 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */; };
@@ -51,7 +50,6 @@
 		79EE9FCC3299E4039DD5349F /* Pods_Trip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93EE7837169C5E1832886480 /* Pods-Trip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trip/Pods-Trip.debug.xcconfig"; sourceTree = "<group>"; };
 		CC51E2271D0DA7C300516AAE /* GooglePlacesAutocomplete.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlacesAutocomplete.framework; path = "Pods/../build/Debug-iphoneos/GooglePlacesAutocomplete/GooglePlacesAutocomplete.framework"; sourceTree = "<group>"; };
-		CC51E2291D0EEAAC00516AAE /* GeofenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeofenceManager.swift; sourceTree = "<group>"; };
 		CC51E22B1D102B2E00516AAE /* TransitFence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitFence.swift; sourceTree = "<group>"; };
 		CC51E22D1D103C1C00516AAE /* BadLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadLocationManager.swift; sourceTree = "<group>"; };
 		CC878BDC1D06EA4100C7F394 /* Trip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trip.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,7 +143,6 @@
 				CC51E22B1D102B2E00516AAE /* TransitFence.swift */,
 				CC878C0F1D06EC0400C7F394 /* GoogleAPIKey.swift */,
 				CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */,
-				CC51E2291D0EEAAC00516AAE /* GeofenceManager.swift */,
 				CC878C1D1D09903900C7F394 /* RouteManager.swift */,
 				CC878C1B1D098F1200C7F394 /* JourneyViewController.swift */,
 				CC878BE31D06EA4100C7F394 /* StatusViewController.swift */,
@@ -261,6 +258,11 @@
 					CC878BDB1D06EA4100C7F394 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 9B4995VYB9;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					CC878BF11D06EA4200C7F394 = {
 						CreatedOnToolsVersion = 7.3;
@@ -381,7 +383,6 @@
 				CC51E22E1D103C1C00516AAE /* BadLocationManager.swift in Sources */,
 				CC878BE01D06EA4100C7F394 /* AppDelegate.swift in Sources */,
 				CC878C121D06EDF300C7F394 /* MapViewController.swift in Sources */,
-				CC51E22A1D0EEAAC00516AAE /* GeofenceManager.swift in Sources */,
 				CC878BE21D06EA4100C7F394 /* PlannerViewController.swift in Sources */,
 				CC878C1E1D09903900C7F394 /* RouteManager.swift in Sources */,
 				CC878C1C1D098F1200C7F394 /* JourneyViewController.swift in Sources */,

@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import SwiftLocation
 
 class MapViewController: UIViewController, CLLocationManagerDelegate {
     
@@ -22,18 +23,34 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appdelegate.shouldSupportAllOrientation = true
         // Do any additional setup after loading the view, typically from a nib.
-            
+        let mapDims = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.y, width: self.view.frame.size.width, height: self.view.frame.size.height - CGRectGetHeight((self.tabBarController?.tabBar.frame)!))
+        
         let camera = GMSCameraPosition.cameraWithLatitude(52.370216,
                                                           longitude: 4.895168, zoom: 10)
-        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
+        let mapView = GMSMapView.mapWithFrame(mapDims, camera: camera)
         mapView.myLocationEnabled = true
         self.view = mapView
         
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2DMake(52.370216, 4.895168)
-        marker.title = "Amsterdam"
-        marker.snippet = "The Netherlands"
-        marker.map = mapView
+        LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
+            print(location.coordinate)
+            print("success")
+            mapView.camera = GMSCameraPosition.cameraWithLatitude(location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 13)
+            
+        }) { error in
+            print("error in getting location")
+            print(error)
+        }
+        
+        mapView.myLocationEnabled = true
+        mapView.settings.myLocationButton = true
+        
+        self.view = mapView
+        
+//        let marker = GMSMarker()
+//        marker.position = CLLocationCoordinate2DMake(52.370216, 4.895168)
+//        marker.title = "Amsterdam"
+//        marker.snippet = "The Netherlands"
+//        marker.map = mapView
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -98,7 +115,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                 return
         }
         let alert = UIAlertController(title: "Wake up!",
-                                      message:"You're getting close to: \(message). Prepare to disembark!",
+                                      message:"You are approaching: \(message). Prepare to disembark!",
                                       preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)

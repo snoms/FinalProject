@@ -62,7 +62,7 @@ class RouteManager {
                     if step.travelMode == PXGoogleDirectionsMode.Transit {
                         print("transit point found")
                         //                    appendFence
-                        let newFence = TransitFence(coordinate: step.transitDetails!.arrivalStop!.location!, radius: 250.00, identifier: index, stop: (step.transitDetails!.arrivalStop?.description)!)
+                        let newFence = TransitFence(coordinate: step.transitDetails!.arrivalStop!.location!, radius: 500.00, identifier: index, stop: (step.transitDetails!.arrivalStop?.description)!)
                         appendFence(newFence)
                     }
                 }
@@ -81,26 +81,27 @@ class RouteManager {
                         let nc = NSNotificationCenter.defaultCenter()
                         nc.postNotificationName("fenceProx", object: nil, userInfo: ["message":fence.stop])
                         
+                        var notification = UILocalNotification()
+                        notification.fireDate = NSDate()
+                        notification.alertBody = "Wake up, you're approaching \(fence.stop). Get ready!"
+                        notification.alertAction = "open"
+                        notification.soundName = UILocalNotificationDefaultSoundName
+                        notification.userInfo = ["message":fence.stop]
+                        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+//                        notification.region = BeaconManager.
                         
-//                        NSNotificationCenter.defaultCenter().postNotificationName("fenceProx", object: fence)
-                        
-                        
-                        
-                        let alert = UIAlertController(title: "Alert!", message: "You're getting close to \(fence.stop). Prepare to disembark!", preferredStyle: .Alert)
-                                                // Grab the value from the text field, and print it when the user clicks OK.
-                        let OKAction = UIAlertAction(title: "Got it!", style: .Default) { (action:UIAlertAction!) in
-                        }
-                        alert.addAction(OKAction)
-
-//                        self.presentViewController(alert, animated: true, completion: nil)
-
-                        
-                            print("entered region\(fence.stop)")
-                            print(temp)
-                        
-                        
-                        
-                        
+//                        let alert = UIAlertController(title: "Alert!", message: "You're getting close to \(fence.stop). Prepare to disembark!", preferredStyle: .Alert)
+//                                                // Grab the value from the text field, and print it when the user clicks OK.
+//                        let OKAction = UIAlertAction(title: "Got it!", style: .Default) { (action:UIAlertAction!) in
+//                        }
+//                        alert.addAction(OKAction)
+//
+////                        self.presentViewController(alert, animated: true, completion: nil)
+//
+//                        
+//                            print("entered region\(fence.stop)")
+//                            print(temp)
+//                        
                         }, onExit: { temp2 in
                             print("left region \(fence.stop)")
                             print(temp2)
@@ -109,6 +110,9 @@ class RouteManager {
                     fenceRegions!.append(newfence)
                     print("started monitoring")
                     print("Firstfenceprint: \(fenceRegions!.first)")
+                    
+                    
+                    
                 } catch {
                     print(error)
                 }

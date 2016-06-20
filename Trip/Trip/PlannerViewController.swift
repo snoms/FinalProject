@@ -20,17 +20,56 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
     
 //    let gpaViewController = GooglePlacesAutocomplete(
 //        apiKey: GoogleAPIkey, placeType: .Address)
+    @IBOutlet weak var openInGmapsButton: UIButton!
+    
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
+    @IBAction func openInGmaps(sender: AnyObject) {
+        
+        var gmapsURL = "comgooglemaps://"
+        
+        if self.fromField.text == "" {
+            LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
+                gmapsURL = "comgooglemaps://?saddr=\(location.coordinate))&daddr=,\(self.destField.text)&directionsmode=transit"
+                print("success")
+                }, onError: { error in
+                    print("error in getting location")
+                    print(error)
+            }) }
+    
+    
+        if self.fromField.text != "" {
+            gmapsURL = "comgooglemaps://?saddr=\(self.fromField.text)&daddr=,\(self.destField.text)&directionsmode=transit"
+        }
+        
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: gmapsURL)!) {
+            UIApplication.sharedApplication().openURL(NSURL(string: gmapsURL)!)
+        }
+        else {
+            var alert = UIAlertController(title: "Error", message: "Google maps not installed", preferredStyle: UIAlertControllerStyle.Alert)
+            var ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            alert.addAction(ok)
+            self.presentViewController(alert, animated:true, completion: nil)
+        }
+        
+    }
     
     override func viewDidLoad() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appdelegate.shouldSupportAllOrientation = false
         
+        self.openInGmapsButton.enabled = false
 //        locationManager.delegate = self
 //        locationManager.desiredAccuracy = kCLLocationAccuracyBest
 //        locationManager.requestAlwaysAuthorization()
 //        locationManager.startUpdatingLocation()
-    
+        datePicker.addTarget(self, action: #selector(PlannerViewController.datePickerChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        
+        
         directionsAPI.mode = PXGoogleDirectionsMode.Transit
+        self.directionsAPI.units = PXGoogleDirectionsUnit.Metric
+        directionsAPI.region = "nl"
+        
 
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -52,6 +91,16 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 
     }
 
+    func datePickerChanged(datePicker:UIDatePicker) {
+        var dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        
+        var strDate = dateFormatter.stringFromDate(datePicker.date)
+//        dateLabel.text = strDate
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -93,6 +142,15 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 //    }
     
     
+    func planNewTrip() {
+        
+    }
+    
+    @IBAction func planFutureTrip(sender: AnyObject) {
+//        directionsAPI.departureTime = strDate
+        planTrip(self)
+    }
+    
     
     
     @IBAction func planTrip(sender: AnyObject) {
@@ -117,6 +175,17 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
             
 //            var curLoc = locationManager.location
             // continue
+            
+            
+//            LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
+//                self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
+//                }, onError: { error in
+//                    print(error)
+//            })
+//            
+//            
+            
+            
         }
         else {
             directionsAPI.from = PXLocation.NamedLocation(fromField.text!)
@@ -144,7 +213,7 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
                 print("here it is")
                 
                 RouteManager.sharedInstance.setRoute(routes)
-                
+                self.openInGmapsButton.enabled = true
                 for routeleg in routes[0].legs[0].steps {
                     //                    print(routeleg.transitDetails)
                     //                    print(routeleg.description)

@@ -10,6 +10,7 @@ import UIKit
 import GoogleMaps
 import CoreLocation
 import SwiftLocation
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Override point for customization after application launch.
         GMSServices.provideAPIKey(GoogleAPIkey)
         
+        IQKeyboardManager.sharedManager().enable = true
         
         // http://stackoverflow.com/questions/33008072/register-notification-in-ios-9
         if application.respondsToSelector("registerUserNotificationSettings:") {

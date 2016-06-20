@@ -81,14 +81,25 @@ class RouteManager {
                         let nc = NSNotificationCenter.defaultCenter()
                         nc.postNotificationName("fenceProx", object: nil, userInfo: ["message":fence.stop])
                         
-                        var notification = UILocalNotification()
-                        notification.fireDate = NSDate()
-                        notification.alertBody = "Wake up, you're approaching \(fence.stop). Get ready!"
-                        notification.alertAction = "open"
-                        notification.soundName = UILocalNotificationDefaultSoundName
-                        notification.userInfo = ["message":fence.stop]
-                        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-//                        notification.region = BeaconManager.
+                        if UIApplication.sharedApplication()
+                            .applicationState != UIApplicationState.Active {
+                            
+                            
+                            var notification = UILocalNotification()
+                            notification.fireDate = NSDate()
+                            notification.alertBody = "Wake up, you're approaching \(fence.stop). Get ready!"
+                            notification.alertAction = "Open Trip"
+                            notification.soundName = UILocalNotificationDefaultSoundName
+                            notification.userInfo = ["message":fence.stop]
+                            //                        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+                            //                        notification.region = BeaconManager.
+
+                            
+                        }
+                        
+                        
+                        
                         
 //                        let alert = UIAlertController(title: "Alert!", message: "You're getting close to \(fence.stop). Prepare to disembark!", preferredStyle: .Alert)
 //                                                // Grab the value from the text field, and print it when the user clicks OK.

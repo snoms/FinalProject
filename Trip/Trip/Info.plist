@@ -25,7 +25,7 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Allow Trip to always use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Trip to use your location when you're using the app</string>
+	<string>Allow Trip to use your location when you&apos;re using the app</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -60,6 +60,10 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+    	<string>comgooglemaps</string>
 	</array>
 </dict>
 </plist>

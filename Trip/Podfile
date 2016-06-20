@@ -6,6 +6,7 @@ target 'Trip' do
 
   pod 'PXGoogleDirections'
   pod 'SwiftLocation'
+  pod 'IQKeyboardManagerSwift'
   use_frameworks!
 
   # Pods for Trip

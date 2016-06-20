@@ -10,10 +10,19 @@ import UIKit
 
 class journeyStepCell: UITableViewCell {
     
-    
     @IBOutlet weak var stepTextView: UIView!
     
     @IBOutlet weak var stepTextfield: UILabel!
+    
+    @IBOutlet weak var lineLabel: UILabel!
+    
+    @IBOutlet weak var motLabel: UILabel!
+    
+    @IBOutlet weak var motImage: UIImageView!
+    
+    @IBOutlet weak var trackLabel: UILabel!
+    
+    @IBOutlet weak var timeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>IQKeyboardManagerSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>PXGoogleDirections-GoogleMaps.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,22 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>01B531BB66530CE2D561D8FCF6672D3B</key>
+		<key>1520003FEBEC114D6C84F832AFEDB994</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0C2AAB03CF3CE8A5993797059C97300A</key>
+		<key>B05A32BBF25316927AA1AF76C795743D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>79E30028579748F8BF675383D64B3516</key>
+		<key>B8B28CBE4AE006C0376B02C2FEE17605</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F6199DF14304B0CDA619B9850B22CB37</key>
+		<key>D41DC972E714E2039E75B7651C718D35</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DAD8008A8495E336DD708273B9525711</key>
 		<dict>
 			<key>primary</key>
 			<true/>

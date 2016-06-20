@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '79E30028579748F8BF675383D64B3516'
+               BlueprintIdentifier = 'DAD8008A8495E336DD708273B9525711'
                BlueprintName = 'PXGoogleDirections-GoogleMaps'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'GoogleMaps.bundle'>

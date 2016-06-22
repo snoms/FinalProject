@@ -15,6 +15,18 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
 
     @IBOutlet weak var fromField: UITextField!
     @IBOutlet weak var destField: UITextField!
+    
+    @IBOutlet weak var currentRoute: UILabel!
+    
+    @IBOutlet weak var currentDestination: UILabel!
+    
+    @IBOutlet weak var clearButton: UIButton!
+    
+    @IBAction func clearRoute(sender: AnyObject) {
+        RouteManager.sharedInstance.clearRoute()
+        hideRouteInfo()
+    }
+    
     let directionsAPI = PXGoogleDirections(apiKey: GoogleAPIkey)
 //    var locationManager: CLLocationManager = CLLocationManager()
     
@@ -48,6 +60,10 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appdelegate.shouldSupportAllOrientation = false
         
+        
+        hideRouteInfo()
+        self.currentDestination.text = "No route loaded!"
+        
 //        self.openInGmapsButton.enabled = false
 //        locationManager.delegate = self
 //        locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -72,16 +88,23 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
         getLocation()
         print("Loaded")
         super.viewDidLoad()
-
-        
     }
     
+    func showRouteInfo() {
+//        currentDestination.hidden = false
+//        currentRoute.hidden = false
+//        clearButton.hidden = false
+        if RouteManager.sharedInstance.getRoute() != nil {
+            clearButton.enabled = true
+        }
+    }
     
-
-
-    
-    
-    
+    func hideRouteInfo() {
+//        currentDestination.hidden = true
+//        currentRoute.hidden = true
+//        clearButton.hidden = true
+        clearButton.enabled = false
+    }
     
     override func viewWillAppear(animated: Bool) {
         getLocation()
@@ -203,6 +226,8 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
                     self.tabBarController?.tabBar.items?[2].enabled = true
                     self.tabBarController?.tabBar.items?[3].enabled = true
                     RouteManager.sharedInstance.setRoute(routes)
+                    self.showRouteInfo()
+                    self.currentDestination.text = RouteManager.sharedInstance.getRoute()!.first?.legs.first?.endAddress
 //                    self.openInGmapsButton.enabled = true
                 }
                 

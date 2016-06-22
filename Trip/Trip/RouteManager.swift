@@ -61,12 +61,9 @@ class RouteManager {
     // appending the fences of the route to our array of fences
     func appendFence(transitFence: TransitFence) {
         if plannedRoute != nil {
-            print("append")
             print("transitfence:\(transitFence)")
-            print("transitfenceID: \(transitFence.stop)")
             print(RouteManager.sharedInstance.transitFences)
             RouteManager.sharedInstance.transitFences?.append(transitFence)
-            print("appended")
             print("first fence: \(RouteManager.sharedInstance.transitFences?.first?.stop)")
         }
         else {
@@ -110,11 +107,12 @@ class RouteManager {
     func startMonitoring() {
         if transitFences != nil {
 //            print("this = \(transitFences!.first!.stop))")
-            for fence in transitFences! {
+            for (index, fence) in transitFences!.enumerate() {
                 do {
                     print("equal to =\(fence.stop)")
+                    
+                    
                     let newfence = try BeaconManager.shared.monitorGeographicRegion(fence.stop, centeredAt: fence.coordinate, radius: fence.radius, onEnter: { temp in
-                        
                         // post notification through notification center for when user is in app
                         let nc = NSNotificationCenter.defaultCenter()
                         nc.postNotificationName("fenceProx", object: nil, userInfo: ["message":fence.stop])
@@ -130,13 +128,7 @@ class RouteManager {
                             //                        UIApplication.sharedApplication().scheduleLocalNotification(notification)
                             UIApplication.sharedApplication().presentLocalNotificationNow(notification)
                             //                        notification.region = BeaconManager.
-
-                            
                         }
-                        
-                        
-                        
-                        
 //                        let alert = UIAlertController(title: "Alert!", message: "You're getting close to \(fence.stop). Prepare to disembark!", preferredStyle: .Alert)
 //                                                // Grab the value from the text field, and print it when the user clicks OK.
 //                        let OKAction = UIAlertAction(title: "Got it!", style: .Default) { (action:UIAlertAction!) in
@@ -152,6 +144,9 @@ class RouteManager {
                         }, onExit: { temp2 in
                             print("left region \(fence.stop)")
                             print(temp2)
+                            if index == self.transitFences!.count - 1 {
+                                self.stopMonitoring()
+                            }
                     })
 
                     fenceRegions!.append(newfence)

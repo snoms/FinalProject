@@ -25,33 +25,29 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var datePicker: UIDatePicker!
     
     @IBAction func openInGmaps(sender: AnyObject) {
-        
-        var gmapsURL = "comgooglemaps://"
-        
-        if self.fromField.text == "" {
-            LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
-                gmapsURL = "comgooglemaps://?saddr=\(location.coordinate))&daddr=,\(self.destField.text)&directionsmode=transit"
-                print("success")
-                }, onError: { error in
-                    print("error in getting location")
-                    print(error)
-            }) }
-    
-    
-        if self.fromField.text != "" {
-            gmapsURL = "comgooglemaps://?saddr=\(self.fromField.text)&daddr=,\(self.destField.text)&directionsmode=transit"
-        }
-        
-        if UIApplication.sharedApplication().canOpenURL(NSURL(string: gmapsURL)!) {
-            UIApplication.sharedApplication().openURL(NSURL(string: gmapsURL)!)
-        }
-        else {
-            var alert = UIAlertController(title: "Error", message: "Google maps not installed", preferredStyle: UIAlertControllerStyle.Alert)
-            var ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-            alert.addAction(ok)
-            self.presentViewController(alert, animated:true, completion: nil)
-        }
-        
+//        
+//        var gmapsURL = "comgooglemaps://"
+//        
+//        if self.fromField.text == "" {
+//            LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
+//                gmapsURL = "comgooglemaps://?saddr=\(location.coordinate))&daddr=,\(self.destField.text)&directionsmode=transit"
+//                print("success")
+//                }, onError: { error in
+//                    print("error in getting location")
+//                    print(error)
+//            }) }
+//        if self.fromField.text != "" {
+//            gmapsURL = "comgooglemaps://?saddr=\(self.fromField.text)&daddr=,\(self.destField.text)&directionsmode=transit"
+//        }
+//        if UIApplication.sharedApplication().canOpenURL(NSURL(string: gmapsURL)!) {
+//            UIApplication.sharedApplication().openURL(NSURL(string: gmapsURL)!)
+//        }
+//        else {
+//            var alert = UIAlertController(title: "Error", message: "Google maps not installed", preferredStyle: UIAlertControllerStyle.Alert)
+//            var ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+//            alert.addAction(ok)
+//            self.presentViewController(alert, animated:true, completion: nil)
+//        }
     }
     
     override func viewDidLoad() {
@@ -65,27 +61,26 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 //        locationManager.startUpdatingLocation()
         datePicker.addTarget(self, action: #selector(PlannerViewController.datePickerChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
-        
+        // configure the PXGoogleDirections instance for transit
         directionsAPI.mode = PXGoogleDirectionsMode.Transit
         self.directionsAPI.units = PXGoogleDirectionsUnit.Metric
         directionsAPI.region = "nl"
         
+        // disable the tab bar items for now
+        self.tabBarController?.tabBar.items?[1].enabled = false
+        self.tabBarController?.tabBar.items?[2].enabled = false
+        self.tabBarController?.tabBar.items?[3].enabled = false
 
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
+        // request location and use it as default departure location if response is ok
+        LocationManager.shared.observeLocations(.Block, frequency: .Continuous, onSuccess: { location in
             print(location.coordinate)
             print("success")
             self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
         }) { error in
             print("error in getting location")
             print(error)
+            // TODO: error alert saying location could not be retrieved
         }
-//        locRequest.start()
-//        locRequest.onSuccess { (location) in
-//            self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
-//        }
-//        locRequest.stop()
         print("Loaded")
         super.viewDidLoad()
 
@@ -151,98 +146,80 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
         planTrip(self)
     }
     
-    
-    
     @IBAction func planTrip(sender: AnyObject) {
         
-        //        directionsAPI.departureTime = PXGoogleDirectionsTime
-        //        PXGoo
-        
-        if fromField.text == "" {
-            //retrieve current location through CLLocation
-            
-//            if let location1: CLLocation! = locationManager.location {
-//                let coordinate1: CLLocationCoordinate2D = location1!.coordinate
-//                
-//                // ... proceed with the location and coordintes
-//                directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
-//
-//            } else {
-//                print("no location...")
-////            }
-//            locationManager.requestAlwaysAuthorization()
-//            locationManager.startUpdatingLocation()
-            
-//            var curLoc = locationManager.location
-            // continue
-            
-            
-//            LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
-//                self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
-//                }, onError: { error in
-//                    print(error)
-//            })
-//            
-//            
-            
-            
-        }
-        else {
+        // if departure field is not empty, use that text as departure point
+        if fromField.text != "" {
             directionsAPI.from = PXLocation.NamedLocation(fromField.text!)
         }
         
+        
+        
+        LocationManager.shared.observeLocations(.Block, frequency: .OneShot, onSuccess: { location in
+            print(location.coordinate)
+            print("success")
+            self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
+        }) { error in
+            print("error in getting location")
+            print(error)
+            // TODO: error alert saying location could not be retrieved
+        }
+
+        
+        
+        
+        
+        // check if destination field is empty
         if destField.text == "" {
-            // pop up error
-            
+            // pop up error because we need a destination
             let alert = UIAlertController(title: "Error", message: "Destination field may not be empty", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
             print("error: must enter destination")
         }
         else {
+        // time to retrieve directions
         directionsAPI.to = PXLocation.NamedLocation(destField.text!)
         directionsAPI.calculateDirections({ response in
             switch response {
             case let .Error(_, error):
-                // Oops, something bad happened, see the error object for more information
+                // error occurred, alert user and break request
                 print(error)
+                let alert = UIAlertController(title: "Error", message: "Could not get Route from Google", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                print("error: must enter destination")
                 break
             case let .Success(request, routes):
-                // Do your work with the routes object array here
+                // route retrieved, show rejectable route preview to user
                 print("route found")
-                print("here it is")
+                let previewDepart = routes.first?.legs.first?.startAddress!
+                let previewArrive = routes.first?.legs.first?.endAddress
+                let previewDuration = routes.first?.legs.first?.duration?.description!
+                let previewDepartTime = routes.first?.legs.first?.departureTime?.description!
+                let previewArriveTime = routes.first?.legs.first?.arrivalTime?.description!
                 
-                RouteManager.sharedInstance.setRoute(routes)
-                self.openInGmapsButton.enabled = true
-                for routeleg in routes[0].legs[0].steps {
-                    //                    print(routeleg.transitDetails)
-                    //                    print(routeleg.description)
-                    print(routeleg.htmlInstructions!)
+                let routeAlertPreview = UIAlertController(title: "Route suggestion", message: "Journey from:\n\(previewDepart!) \n Depart at: \(previewDepartTime) \n\nto:\n\(previewArrive!) \n Arrive at: \(previewArriveTime) \n\n Trip time: \(previewDuration!).", preferredStyle: .Alert)
+                
+                // on acceptance of proposal load the route in singleton and enable tab bar
+                let acceptAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.tabBarController?.tabBar.items?[1].enabled = true
+                    self.tabBarController?.tabBar.items?[2].enabled = true
+                    self.tabBarController?.tabBar.items?[3].enabled = true
+                    RouteManager.sharedInstance.setRoute(routes)
+//                    self.openInGmapsButton.enabled = true
                 }
                 
-//                for leg in routes[0].legs {
-//                    for steps in leg.steps {
-//                        if steps.transitDetails != nil {
-//                            print(steps.transitDetails?.arrivalStop?.location?.latitude)
-////                            print("huge loop1")
-//                            if CLLocationManager.isMonitoringAvailableForClass(CLCircularRegion) {
-//                                if CLLocationManager.authorizationStatus() == .AuthorizedAlways {
-////                                    print("huge loop2")
-//                                    if let newRegion: CLCircularRegion = CLCircularRegion(center: (steps.transitDetails?.arrivalStop?.location)!, radius: 100.0, identifier: (steps.transitDetails?.arrivalStop?.description!)!) {
-//                                        newRegion.notifyOnEntry = true
-//                                        newRegion.notifyOnExit = false
-//                                        self.locationManager.startMonitoringForRegion(newRegion)
-////                                        print("huge loop3")
-//                                    }
-//                                    
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                
-//                
-//                
+                // make cancel button
+                let cancelAction = UIAlertAction(title: "Refuse", style: UIAlertActionStyle.Destructive) {
+                    UIAlertAction in
+                }
+                
+                // add buttons to alert controller and present it
+                routeAlertPreview.addAction(cancelAction)
+                routeAlertPreview.addAction(acceptAction)
+                self.presentViewController(routeAlertPreview, animated: true, completion: nil)
                 break
             }
         })

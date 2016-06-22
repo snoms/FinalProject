@@ -24,12 +24,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         appdelegate.shouldSupportAllOrientation = true
         // Do any additional setup after loading the view, typically from a nib.
         let mapDims = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.y, width: self.view.frame.size.width, height: self.view.frame.size.height - CGRectGetHeight((self.tabBarController?.tabBar.frame)!))
-        
+        print(mapDims)
+        print(self.view.frame.size.height)
+        print(CGRectGetHeight((self.tabBarController?.tabBar.frame)!))
         let camera = GMSCameraPosition.cameraWithLatitude(52.370216,
                                                           longitude: 4.895168, zoom: 10)
         let mapView = GMSMapView.mapWithFrame(mapDims, camera: camera)
         mapView.myLocationEnabled = true
         self.view = mapView
+        print(mapView.frame.height)
         
         LocationManager.shared.observeLocations(.House, frequency: .OneShot, onSuccess: { location in
             print(location.coordinate)
@@ -66,7 +69,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             let polyline = RouteManager.sharedInstance.getRoute()!.first?.path
             let camera = GMSCameraPosition.cameraWithLatitude(52.370216,
                                                               longitude: 4.895168, zoom: 10)
-            let mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
+            
+            let mapDims = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.y, width: self.view.frame.size.width, height: self.view.frame.size.height - CGRectGetHeight((self.tabBarController?.tabBar.frame)!))
+            let mapView = GMSMapView.mapWithFrame(mapDims, camera: camera)
             mapView.myLocationEnabled = true
             self.view = mapView
             let routePolyline = GMSPolyline(path: polyline)
@@ -82,8 +87,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             for index in 1...polyline!.count() {
                 bounds = bounds.includingCoordinate(polyline!.coordinateAtIndex(index))
             }
-            mapView.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(bounds))
-            
+            mapView.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(bounds, withPadding: 80.0))
             // Adding markers to map
             var markers: [GMSMarker] = []
             for fenceMarker in RouteManager.sharedInstance.getTransitFences()! {

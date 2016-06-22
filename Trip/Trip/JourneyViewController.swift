@@ -9,6 +9,7 @@
 import UIKit
 import PXGoogleDirections
 import CoreLocation
+import MapKit
 
 class JourneyViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
@@ -55,6 +56,7 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JourneyViewController.catchNotification(_:)) , name: "fenceProx", object: nil)
         loadData()
+//        self.tableView.backgroundColor = UIColor.init(red: 0.3, green: 0.25, blue: 0.5, alpha: 0.1)
         tableView.reloadData()
         
     }
@@ -114,28 +116,53 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
 //        if plannedRoute != nil {
-
         let cell = self.tableView.dequeueReusableCellWithIdentifier("journeyStepCell", forIndexPath: indexPath) as! journeyStepCell
-        print("CALLED CELL FOR ROW AT INDEX")
-        
         
         if indexPath.row == 0 {
-            cell.timeLabel.text = NSDate(timeInterval: plannedRoute?[0].legs[0].departureTime?.timestamp!).time
+            cell.timeLabel.text = plannedRoute?[0].legs[0].departureTime?.description!
+//                NSDate(timeInterval: plannedRoute?[0].legs[0].departureTime?.description!)
+            // timestamp
         }
         else {
             cell.timeLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.departureTime?.description!
         }
         
         cell.stepTextfield.text = plannedRoute?[0].legs[0].steps[indexPath.row].htmlInstructions!
-        
         cell.motLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.name!
-        
         cell.lineLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.shortName!
+
+//        cell.trackLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails.
         
-//        cell.timeLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.
+//        if RouteManager.sharedInstance.getRoute().first.legs.first.steps[indexPath.row].travelMode? == "Walking" {
+//            
+        
+////        if plannedRoute![0].legs[0].steps[indexPath.row].travelMode? == "Walking" {
+//            cell.motImage.image = UIImage(named: "walking")
+//        }
         
         
-        cell.stepTextfield.numberOfLines = 1;
+        if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails == nil {
+            cell.motImage.image = UIImage(named: "walking")
+            cell.backgroundColor = UIColor.init(red: 0.0, green: 0.8, blue: 0.2, alpha: 0.075)
+        }
+        
+        if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.CommuterTrain || plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HeavyRail || plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HighSpeedTrain {
+            cell.motImage.image = UIImage(named: "train")
+        }
+
+        if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Subway {
+            cell.motImage.image = UIImage(named: "subway")
+        }
+        
+        if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Tram {
+            cell.motImage.image = UIImage(named: "tram")
+        }
+        
+        if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Bus {
+            cell.motImage.image = UIImage(named: "bus")
+        }
+        
+        cell.stepTextfield.numberOfLines = 2;
         cell.stepTextfield.minimumScaleFactor = 8/UIFont.labelFontSize();
         cell.stepTextfield.adjustsFontSizeToFitWidth = true;
         cell.stepTextfield.font = UIFont(name: "HelveticaNeue-Thin", size: 18.0)
@@ -155,14 +182,13 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.timeLabel.numberOfLines = 1;
         cell.timeLabel.minimumScaleFactor = 8/UIFont.labelFontSize();
         cell.timeLabel.adjustsFontSizeToFitWidth = true;
-        cell.timeLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 11.0)
+        cell.timeLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 14.0)
         
-        cell.trackLabel.numberOfLines = 1;
-        cell.trackLabel.minimumScaleFactor = 8/UIFont.labelFontSize();
-        cell.trackLabel.adjustsFontSizeToFitWidth = true;
-        cell.trackLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 11.0)
-        
-        cell.motImage.image = UIImage(named: "status_icon")
+//        cell.trackLabel.numberOfLines = 1;
+//        cell.trackLabel.minimumScaleFactor = 8/UIFont.labelFontSize();
+//        cell.trackLabel.adjustsFontSizeToFitWidth = true;
+//        cell.trackLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 11.0)
+//        
         
         cell.layoutMargins = UIEdgeInsetsZero
         cell.layer.cornerRadius = 5
@@ -225,5 +251,29 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         self.presentViewController(alert, animated: true, completion: nil)
     }
 
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let openGmaps = UITableViewRowAction(style: .Default, title: "Open in Maps") { (action, indexPath) in
+            // delete item at indexPath
+            
+            var latitude = String(format: "%f", (self.plannedRoute?[0].legs[0].steps[indexPath.row].startLocation!.latitude)!)
+            let longitude = String(format: "%f", (self.plannedRoute?[0].legs[0].steps[indexPath.row].startLocation!.longitude)!)
+            
+            let mapssstring = latitude + "," + longitude
+            
+            let mapsString = "http://maps.apple.com/?daddr=" + mapssstring
+//            let point = MKPlacemark(coordinate: plannedRoute?[0].legs[0].steps[indexPath.row]., addressDictionary: [String : AnyObject]?)
+//            let mapsString = plannedRoute?[0].legs[0].steps[indexPath.row].
+            UIApplication.sharedApplication().openURL(NSURL(string: mapsString)!)
+//            TodoManager.sharedInstance.todolists[self.listID].removeTodo(indexPath.row)
+//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+//            TodoManager.sharedInstance.saveTodos()
+        }
+        
+        openGmaps.backgroundColor = self.view.tintColor
+        
+        return [openGmaps]
+    }
+    
+    
 
 }

@@ -13,16 +13,19 @@ import SwiftLocation
 
 class RouteManager {
     
+    // initiate singleton as sharedInstance
     static let sharedInstance = RouteManager()
     
     private init() { }
     
+    // declare private variables for the route, its fences and the relevant regions
     private var plannedRoute: [PXGoogleDirectionsRoute]?
     
     private var transitFences: [TransitFence]? = []
     
     private var fenceRegions: [RegionRequest]? = []
     
+    // function to expose route
     func getRoute() -> [PXGoogleDirectionsRoute]? {
         if plannedRoute != nil {
             return plannedRoute
@@ -32,6 +35,7 @@ class RouteManager {
         }
     }
     
+    // function to load route and execute fence extraction sequence, and start monitoring
     func setRoute(newRoute: [PXGoogleDirectionsRoute]) {
         plannedRoute = newRoute
         detectTransitStops()
@@ -39,10 +43,10 @@ class RouteManager {
         startFenceMonitors()
     }
     
+    // appending the fences of the route to our array of fences
     func appendFence(transitFence: TransitFence) {
         if plannedRoute != nil {
             print("append")
-//            print(getRoute()!.first!.legs.first!.steps.first!.transitDetails)
             print("transitfence:\(transitFence)")
             print("transitfenceID: \(transitFence.stop)")
             print(RouteManager.sharedInstance.transitFences)
@@ -55,14 +59,31 @@ class RouteManager {
         }
     }
     
+    // function to extract the pertinent transit stops and create fences
     func detectTransitStops() {
         if getRoute() != nil {
             for (index, step) in ((getRoute()?.first!.legs.first!.steps)?.enumerate())! {
                 if step.transitDetails != nil {
                     if step.travelMode == PXGoogleDirectionsMode.Transit {
                         print("transit point found")
-                        //                    appendFence
-                        let newFence = TransitFence(coordinate: step.transitDetails!.arrivalStop!.location!, radius: 500.00, identifier: index, stop: (step.transitDetails!.arrivalStop?.description)!)
+                        var newRadius: CLLocationDistance = 500.00
+                        
+                        if step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.CommuterTrain || step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HeavyRail || step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HighSpeedTrain {
+                            newRadius = 5000.00
+                        }
+                        
+                        if step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Subway {
+                            newRadius = 2250.00
+                        }
+                        
+                        if step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Tram {
+                            newRadius = 500.00
+                        }
+                        
+                        if step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Bus {
+                            newRadius = 400.00
+                        }
+                        let newFence = TransitFence(coordinate: step.transitDetails!.arrivalStop!.location!, radius: newRadius, identifier: index, stop: (step.transitDetails!.arrivalStop?.description)!)
                         appendFence(newFence)
                     }
                 }
@@ -70,23 +91,24 @@ class RouteManager {
         }
     }
     
+    // initiate region monitoring for our fences
     func startMonitoring() {
         if transitFences != nil {
-            print("this = \(transitFences!.first!.stop))")
+//            print("this = \(transitFences!.first!.stop))")
             for fence in transitFences! {
                 do {
                     print("equal to =\(fence.stop)")
                     let newfence = try BeaconManager.shared.monitorGeographicRegion(fence.stop, centeredAt: fence.coordinate, radius: fence.radius, onEnter: { temp in
                         
+                        // post notification through notification center for when user is in app
                         let nc = NSNotificationCenter.defaultCenter()
                         nc.postNotificationName("fenceProx", object: nil, userInfo: ["message":fence.stop])
                         
+                        // create notification to be pushed locally when app is in background
                         if UIApplication.sharedApplication()
                             .applicationState != UIApplicationState.Active {
-                            
-                            
-                            var notification = UILocalNotification()
-                            notification.fireDate = NSDate()
+                            let notification = UILocalNotification()
+//                            notification.fireDate = NSDate()
                             notification.alertBody = "Wake up, you're approaching \(fence.stop). Get ready!"
                             notification.alertAction = "Open Trip"
                             notification.soundName = UILocalNotificationDefaultSoundName
@@ -140,7 +162,7 @@ class RouteManager {
     
     func startFenceMonitors() {
         for fence in transitFences! {
-            regionWithGeotification(fence)
+//            regionWithGeotification(fence)
         }
     }
 

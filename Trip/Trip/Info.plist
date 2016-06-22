@@ -20,16 +20,21 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>comgooglemaps</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Allow Trip to always use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Trip to use your location when you&apos;re using the app</string>
+	<string>Allow Trip to use your location when you're using the app</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>location</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -60,10 +65,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-	</array>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-    	<string>comgooglemaps</string>
 	</array>
 </dict>
 </plist>

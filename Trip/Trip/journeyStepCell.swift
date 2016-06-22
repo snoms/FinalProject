@@ -19,9 +19,7 @@ class journeyStepCell: UITableViewCell {
     @IBOutlet weak var motLabel: UILabel!
     
     @IBOutlet weak var motImage: UIImageView!
-    
-    @IBOutlet weak var trackLabel: UILabel!
-    
+        
     @IBOutlet weak var timeLabel: UILabel!
     
     override func awakeFromNib() {

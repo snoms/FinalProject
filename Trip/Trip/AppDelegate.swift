@@ -42,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         LocationManager.shared.allowsBackgroundEvents = true
 
+        
+        
 //        locationManager.delegate = self
 //        locationManager.requestAlwaysAuthorization()
         
@@ -56,7 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        LocationManager.shared.allowsBackgroundEvents = true
         
+        LocationManager.shared.observeLocations(.Block, frequency: .Continuous, onSuccess: { (location) in
+            print("background monitored: \(location)")
+            }) { (error) in
+                print("background error: \(error)")
+        }
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

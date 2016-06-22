@@ -11,7 +11,7 @@ import PXGoogleDirections
 import CoreLocation
 import SwiftLocation
 
-class PlannerViewController: UIViewController, CLLocationManagerDelegate {
+class PlannerViewController: UIViewController, CLLocationManagerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var fromField: UITextField!
     @IBOutlet weak var destField: UITextField!
@@ -20,12 +20,6 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
     
 //    let gpaViewController = GooglePlacesAutocomplete(
 //        apiKey: GoogleAPIkey, placeType: .Address)
-    @IBOutlet weak var openInGmapsButton: UIButton!
-    
-    @IBOutlet weak var datePicker: UIDatePicker!
-    
-    @IBAction func openInGmaps(sender: AnyObject) {
-//        
 //        var gmapsURL = "comgooglemaps://"
 //        
 //        if self.fromField.text == "" {
@@ -48,19 +42,21 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 //            alert.addAction(ok)
 //            self.presentViewController(alert, animated:true, completion: nil)
 //        }
-    }
+//    }
     
     override func viewDidLoad() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appdelegate.shouldSupportAllOrientation = false
         
-        self.openInGmapsButton.enabled = false
+//        self.openInGmapsButton.enabled = false
 //        locationManager.delegate = self
 //        locationManager.desiredAccuracy = kCLLocationAccuracyBest
 //        locationManager.requestAlwaysAuthorization()
 //        locationManager.startUpdatingLocation()
-        datePicker.addTarget(self, action: #selector(PlannerViewController.datePickerChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        
+//        datePicker.addTarget(self, action: #selector(PlannerViewController.datePickerChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        fromField.delegate = self
+        destField.delegate = self
+        self.fromField.placeholder = ""
         // configure the PXGoogleDirections instance for transit
         directionsAPI.mode = PXGoogleDirectionsMode.Transit
         self.directionsAPI.units = PXGoogleDirectionsUnit.Metric
@@ -71,31 +67,36 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
         self.tabBarController?.tabBar.items?[2].enabled = false
         self.tabBarController?.tabBar.items?[3].enabled = false
 
+        
         // request location and use it as default departure location if response is ok
-        LocationManager.shared.observeLocations(.Block, frequency: .Continuous, onSuccess: { location in
-            print(location.coordinate)
-            print("success")
-            self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
-        }) { error in
-            print("error in getting location")
-            print(error)
-            // TODO: error alert saying location could not be retrieved
-        }
+        getLocation()
         print("Loaded")
         super.viewDidLoad()
 
-    }
-
-    func datePickerChanged(datePicker:UIDatePicker) {
-        var dateFormatter = NSDateFormatter()
         
-        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        
-        var strDate = dateFormatter.stringFromDate(datePicker.date)
-//        dateLabel.text = strDate
     }
     
+    
+
+
+    
+    
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        getLocation()
+    }
+//
+//    func datePickerChanged(datePicker:UIDatePicker) {
+//        var dateFormatter = NSDateFormatter()
+//        
+//        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+//        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+//        
+//        var strDate = dateFormatter.stringFromDate(datePicker.date)
+////        dateLabel.text = strDate
+//    }
+//    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -136,14 +137,21 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 //        }
 //    }
     
-    
-    func planNewTrip() {
+    func getCoreLocation() {
         
     }
-    
-    @IBAction func planFutureTrip(sender: AnyObject) {
-//        directionsAPI.departureTime = strDate
-        planTrip(self)
+
+    func getLocation() {
+        LocationManager.shared.observeLocations(.Block, frequency: .Continuous, onSuccess: { location in
+            print(location.coordinate)
+            print("getLocation success")
+            self.fromField.placeholder = "Current location"
+            self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
+        }) { error in
+            print("error in getLocation")
+            print(error)
+            // TODO: error alert saying location could not be retrieved
+        }
     }
     
     @IBAction func planTrip(sender: AnyObject) {
@@ -153,24 +161,11 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
             directionsAPI.from = PXLocation.NamedLocation(fromField.text!)
         }
         
-        
-        
-        LocationManager.shared.observeLocations(.Block, frequency: .OneShot, onSuccess: { location in
-            print(location.coordinate)
-            print("success")
-            self.directionsAPI.from = PXLocation.CoordinateLocation(location.coordinate)
-        }) { error in
-            print("error in getting location")
-            print(error)
-            // TODO: error alert saying location could not be retrieved
-        }
-
-        
-        
-        
+        getLocation()
         
         // check if destination field is empty
         if destField.text == "" {
+            getLocation()
             // pop up error because we need a destination
             let alert = UIAlertController(title: "Error", message: "Destination field may not be empty", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -226,4 +221,9 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate {
 
         }
     }
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }

@@ -15,7 +15,14 @@ import IQKeyboardManagerSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
+    
     var window: UIWindow?
+    var newlocationManager: CLLocationManager!
+    var seenError : Bool = false
+    var locationFixAchieved : Bool = false
+    var locationStatus : NSString = "Not Started"
+    
+    
 //    let locationManager = CLLocationManager()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -23,6 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         GMSServices.provideAPIKey(GoogleAPIkey)
         
         IQKeyboardManager.sharedManager().enable = true
+        
+        initLocationManager()
+        
+        
+        
         
         // http://stackoverflow.com/questions/33008072/register-notification-in-ios-9
         if application.respondsToSelector("registerUserNotificationSettings:") {
@@ -41,15 +53,85 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
         
         LocationManager.shared.allowsBackgroundEvents = true
-
-        
-        
-//        locationManager.delegate = self
-//        locationManager.requestAlwaysAuthorization()
         
         return true
     }
 
+    
+    // jacked from  http://stackoverflow.com/questions/24252645/how-to-get-location-user-whith-cllocationmanager-in-swift
+    
+    func initLocationManager() {
+        seenError = false
+        locationFixAchieved = false
+        newlocationManager = CLLocationManager()
+        newlocationManager.delegate = self
+        CLLocationManager.locationServicesEnabled()
+        newlocationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        newlocationManager.requestAlwaysAuthorization()
+    }
+    
+    
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        newlocationManager.stopUpdatingLocation()
+        if ((error) != nil) {
+            if (seenError == false) {
+                seenError = true
+                print(error)
+            }
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [CLLocation]) {
+        if (locationFixAchieved == false) {
+            locationFixAchieved = true
+            var locationArray = locations as NSArray
+            var locationObj = locationArray.lastObject as! CLLocation
+            var coord = locationObj.coordinate
+            
+            print(coord.latitude)
+            print(coord.longitude)
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!,
+                         didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        var shouldIAllow = false
+        
+        switch status {
+        case CLAuthorizationStatus.Restricted:
+            locationStatus = "Restricted Access to location"
+        case CLAuthorizationStatus.Denied:
+            locationStatus = "User denied access to location"
+        case CLAuthorizationStatus.NotDetermined:
+            locationStatus = "Status not determined"
+        default:
+            locationStatus = "Allowed to location Access"
+            shouldIAllow = true
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName("LabelHasbeenUpdated", object: nil)
+        if (shouldIAllow == true) {
+            NSLog("Location to Allowed")
+            // Start location services
+            newlocationManager.startUpdatingLocation()
+        } else {
+            NSLog("Denied access: \(locationStatus)")
+        }
+    }
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -59,7 +141,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         LocationManager.shared.allowsBackgroundEvents = true
-        
+//        var locations = CLLocation()
+
         LocationManager.shared.observeLocations(.Block, frequency: .Continuous, onSuccess: { (location) in
             print("background monitored: \(location)")
             }) { (error) in

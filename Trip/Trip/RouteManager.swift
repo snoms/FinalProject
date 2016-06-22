@@ -35,12 +35,27 @@ class RouteManager {
         }
     }
     
+    func clearRoute() {
+        stopMonitoring()
+        plannedRoute = []
+        transitFences = []
+        fenceRegions = []
+    }
+    
+    func stopMonitoring() {
+        if fenceRegions != nil {
+            for fence in fenceRegions! {
+                BeaconManager.shared.stopMonitorGeographicRegion(request: fence)
+            }
+        }
+    }
+    
     // function to load route and execute fence extraction sequence, and start monitoring
     func setRoute(newRoute: [PXGoogleDirectionsRoute]) {
+        clearRoute()
         plannedRoute = newRoute
         detectTransitStops()
         startMonitoring()
-        startFenceMonitors()
     }
     
     // appending the fences of the route to our array of fences
@@ -108,7 +123,6 @@ class RouteManager {
                         if UIApplication.sharedApplication()
                             .applicationState != UIApplicationState.Active {
                             let notification = UILocalNotification()
-//                            notification.fireDate = NSDate()
                             notification.alertBody = "Wake up, you're approaching \(fence.stop). Get ready!"
                             notification.alertAction = "Open Trip"
                             notification.soundName = UILocalNotificationDefaultSoundName
@@ -158,14 +172,6 @@ class RouteManager {
         print("notification received!")
     }
 
-    
-    
-    func startFenceMonitors() {
-        for fence in transitFences! {
-//            regionWithGeotification(fence)
-        }
-    }
-
     func getTransitFences() -> [TransitFence]? {
         if transitFences != nil {
             return transitFences
@@ -175,14 +181,14 @@ class RouteManager {
         }
     }
     
-    func regionWithGeotification(geotification: TransitFence) -> CLCircularRegion {
-        // 1
-        let region = CLCircularRegion(center: geotification.coordinate, radius: geotification.radius, identifier: geotification.stop)
-        // 2
-        region.notifyOnEntry = true
-//        region.notifyOnExit = !region.notifyOnEntry
-        return region
-    }
+//    func regionWithGeotification(geotification: TransitFence) -> CLCircularRegion {
+//        // 1
+//        let region = CLCircularRegion(center: geotification.coordinate, radius: geotification.radius, identifier: geotification.stop)
+//        // 2
+//        region.notifyOnEntry = true
+////        region.notifyOnExit = !region.notifyOnEntry
+//        return region
+//    }
     
     
 }

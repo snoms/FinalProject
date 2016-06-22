@@ -81,7 +81,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             let halfPurp = UIColor(hexColor: "7300e6")
 //                UIColor(red: 120, green: 0, blue: 210, alpha: 0.8)
             
-            routePolyline.strokeColor = halfPurp
+            routePolyline.strokeColor = self.view.tintColor
             routePolyline.map = mapView
             var bounds = GMSCoordinateBounds()
             for index in 1...polyline!.count() {

@@ -148,19 +148,28 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.CommuterTrain || plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HeavyRail || plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HighSpeedTrain {
             cell.motImage.image = UIImage(named: "train")
+            cell.backgroundColor = UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.075)
+
         }
 
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Subway {
             cell.motImage.image = UIImage(named: "subway")
+            cell.backgroundColor = UIColor.init(red: 0.3, green: 0.2, blue: 0.0, alpha: 0.075)
+
         }
         
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Tram {
             cell.motImage.image = UIImage(named: "tram")
+            cell.backgroundColor = UIColor.init(red: 0.2, green: 0.0, blue: 0.2, alpha: 0.075)
+
         }
         
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Bus {
             cell.motImage.image = UIImage(named: "bus")
+            cell.backgroundColor = UIColor.init(red: 0.0, green: 0.2, blue: 0.8, alpha: 0.075)
+
         }
+        
         
         cell.stepTextfield.numberOfLines = 2;
         cell.stepTextfield.minimumScaleFactor = 8/UIFont.labelFontSize();
@@ -193,7 +202,7 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.layoutMargins = UIEdgeInsetsZero
         cell.layer.cornerRadius = 5
         cell.layer.masksToBounds = true
-
+        
 
         
         

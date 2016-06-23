@@ -11,6 +11,9 @@
       location = "group:GpsiesTrack-2.gpx">
    </FileRef>
    <FileRef
+      location = "group:FastTrainRoute.gpx">
+   </FileRef>
+   <FileRef
       location = "group:Trip.xcodeproj">
    </FileRef>
    <FileRef

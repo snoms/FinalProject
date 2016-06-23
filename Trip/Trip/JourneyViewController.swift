@@ -56,9 +56,13 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JourneyViewController.catchNotification(_:)) , name: "fenceProx", object: nil)
         loadData()
-//        self.tableView.backgroundColor = UIColor.init(red: 0.3, green: 0.25, blue: 0.5, alpha: 0.1)
         tableView.reloadData()
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        loadData()
+        tableView.reloadData()
+        print("viewa ppeared")
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,9 +85,6 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-//        print("CALLED NUMBER OF ROWS IN SECTION")
-//        print(plannedRoute)
         if (plannedRoute != nil) {
             print("cell count")
             print(plannedRoute![0].legs[0].steps.count)
@@ -92,25 +93,6 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         else {
             return 10
         }
-    }
-    
-    @IBAction func updateTable(sender: AnyObject) {
-        
-        if (RouteManager.sharedInstance.getRoute() != nil) {
-            plannedRoute = RouteManager.sharedInstance.getRoute()
-            print("ok")
-            for routeleg in plannedRoute![0].legs[0].steps {
-                //                    print(routeleg.transitDetails)
-                //                    print(routeleg.description)
-                print(routeleg.htmlInstructions!)
-                print(plannedRoute![0].legs[0].steps.count)
-                print(plannedRoute?.description)
-            }
-        }
-        else {
-            print("error in viewdidload if let")
-        }
-        tableView.reloadData()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

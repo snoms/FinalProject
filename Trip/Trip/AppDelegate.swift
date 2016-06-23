@@ -67,10 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         newlocationManager.delegate = self
         CLLocationManager.locationServicesEnabled()
         newlocationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
         newlocationManager.requestAlwaysAuthorization()
     }
-    
     
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
@@ -121,17 +119,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
 
     
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -173,6 +160,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 
     func handleRegionEvent(region: CLRegion!) {
         print("Geofence triggered!")
+        print(region.identifier)
+        
+        if UIApplication.sharedApplication()
+            .applicationState != UIApplicationState.Active {
+            let notification = UILocalNotification()
+            notification.alertBody = "Wake up, you're approaching \(region.identifier). Get ready!"
+            notification.alertAction = "Open Trip"
+            notification.soundName = UILocalNotificationDefaultSoundName
+            notification.userInfo = ["message":region.identifier]
+            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        }
+        else {
+            let nc = NSNotificationCenter.defaultCenter()
+            nc.postNotificationName("fenceProx", object: nil, userInfo: ["message":region.identifier])
+        }
+    
     }
     
 //    func regionWithGeotification(geotification: TransitFence) -> CLCircularRegion {
@@ -184,10 +187,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 //        return region
 //    }
     
-    
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if region is CLCircularRegion {
             handleRegionEvent(region)
+            
             print("Entered")
         }
     }
@@ -198,6 +201,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             print("Exit")
         }
     }
-    
 }
-

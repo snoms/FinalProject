@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="GPSies http://www.gpsies.com - GPSies Track" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>GPSies Track</name>
+    <link href="http://www.gpsies.com/">
+      <text>GPSies Track on GPSies.com</text>
+    </link>
+    <time>2016-06-23T13:19:15Z</time>
+  </metadata>
+  <wpt lat="52.31194201" lon="5.044720172">
+    <ele>2.0000000</ele>
+    <time>2010-01-01T00:00:00Z</time>
+    <name>WP 1</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.33130055" lon="4.999701976">
+    <ele>3.0000000</ele>
+    <time>2010-01-01T00:00:44Z</time>
+    <name>WP 2</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.34944476" lon="4.956915378">
+    <ele>3.0000000</ele>
+    <time>2010-01-01T00:01:25Z</time>
+    <name>WP 3</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.35958864" lon="4.932668209">
+    <ele>4.0000000</ele>
+    <time>2010-01-01T00:01:49Z</time>
+    <name>WP 4</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.36401767" lon="4.930822849">
+    <ele>3.0000000</ele>
+    <time>2010-01-01T00:01:55Z</time>
+    <name>WP 5</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.36980880" lon="4.933311939">
+    <ele>3.0000000</ele>
+    <time>2010-01-01T00:02:03Z</time>
+    <name>WP 6</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.37413200" lon="4.929256439">
+    <ele>5.0000000</ele>
+    <time>2010-01-01T00:02:09Z</time>
+    <name>WP 7</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.37597906" lon="4.919911623">
+    <ele>4.0000000</ele>
+    <time>2010-01-01T00:02:17Z</time>
+    <name>WP 8</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.37700080" lon="4.912379980">
+    <ele>6.0000000</ele>
+    <time>2010-01-01T00:02:23Z</time>
+    <name>WP 9</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.37684361" lon="4.907509088">
+    <ele>7.0000000</ele>
+    <time>2010-01-01T00:02:27Z</time>
+    <name>WP 10</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.37924069" lon="4.900170564">
+    <ele>9.0000000</ele>
+    <time>2010-01-01T00:02:34Z</time>
+    <name>WP 11</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.38922059" lon="4.864969253">
+    <ele>3.0000000</ele>
+    <time>2010-01-01T00:03:05Z</time>
+    <name>WP 12</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.38911582" lon="4.847631454">
+    <ele>9.0000000</ele>
+    <time>2010-01-01T00:03:18Z</time>
+    <name>WP 13</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+  <wpt lat="52.38922059" lon="4.832353591">
+    <ele>-2.000000</ele>
+    <time>2010-01-01T00:03:31Z</time>
+    <name>WP 14</name>
+    <sym>generic</sym>
+    <type>Generic</type>
+  </wpt>
+</gpx>
+

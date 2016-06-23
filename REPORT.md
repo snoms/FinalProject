@@ -5,11 +5,11 @@ Trip is a lightweight public transport assistant. It shows the user an easy to r
 
 ### Technical design
 ##### Overview
-A route is requested through the PXGoogleDirections (PXGD) framework which returns a complex nested object containing the directions. This object is placed in a singleton (RouteManager). The framework includes the Google Maps SDK, which was also used to display the route in the Map view. ![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Overly_nested_structure.png "Insight into a single step of a journey")
+A route is requested through the PXGoogleDirections (PXGD) framework which returns a complex nested object containing the directions. This object is placed in a singleton (RouteManager). The framework includes the Google Maps SDK, which was also used to display the route in the Map view. [Insight into a single step of a journey.](https://github.com/snoms/FinalProject/blob/master/doc/Overly_nested_structure.png )
 
 In addition to the PXGD framework, I used SwiftLocation, which is a framework that provides a singleton instance of the Apple CoreLocation Location Manager and adds several useful functions such as filtering location request responses by a certain accuracy and automating certain Region Monitoring aspects.
 
-##### Classes
+### Classes
 The main class which I've created is a singleton called RouteManager, which holds the PXGD response and contains several functions.
 
 #### RouteManager
@@ -17,12 +17,12 @@ The main class which I've created is a singleton called RouteManager, which hold
 The RouteManager contains the PXGD response in the plannedRoute array, and two arrays of TransitFences (a transitFence holds data on a transit point on which a geofence will be based - coordinates, a radius, and a name) and fenceRegions (the actual geofence as created by the SwiftLocation singleton). 
 
 ##### Methods
-*getRoute() -> returns the loaded route
-*clearRoute() -> clears the loaded route and its geofences and stops region monitoring
-*stopMonitoring() -> loops over the fences and halts monitoring
-*setRoute() -> loads a PXGD response into the singleton
-*detectTransitStops() -> loops over the steps of the loaded route, detecting relevant transit points and creating transitFences
-*startMonitoring() -> initiates the geofences, attaching the relevant notifications to be included in the alerts triggered on entering these regions
+* getRoute() -> returns the loaded route
+* clearRoute() -> clears the loaded route and its geofences and stops region monitoring
+* stopMonitoring() -> loops over the fences and halts monitoring
+* setRoute() -> loads a PXGD response into the singleton
+* detectTransitStops() -> loops over the steps of the loaded route, detecting relevant transit points and creating transitFences
+* startMonitoring() -> initiates the geofences, attaching the relevant notifications to be included in the alerts triggered on entering these regions
 
 ### Changes and Challenges
 

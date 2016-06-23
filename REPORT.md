@@ -1,3 +1,6 @@
+![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Trip_icon.png "Trip icon")
+
+
 ## Short overview
 Trip is a lightweight public transport assistant. It shows the user an easy to read overview of the planned journey, and alerts the user when they need to make a transit movement (exiting their vehicle). 
 

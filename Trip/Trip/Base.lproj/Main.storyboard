@@ -168,8 +168,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="66" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hg4-pA-6Mb">
-                                <rect key="frame" x="0.0" y="78" width="600" height="432"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="66" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hg4-pA-6Mb">
+                                <rect key="frame" x="0.0" y="78" width="600" height="473"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="journeyStepCell" rowHeight="66" id="pe2-NS-dDj" customClass="journeyStepCell" customModule="Trip" customModuleProvider="target">
@@ -297,6 +297,8 @@
                         <constraints>
                             <constraint firstItem="ptl-2h-tca" firstAttribute="top" secondItem="ore-ZK-pnZ" secondAttribute="bottom" constant="8" id="4i7-WR-bci"/>
                             <constraint firstItem="Hg4-pA-6Mb" firstAttribute="top" secondItem="ptl-2h-tca" secondAttribute="bottom" id="9bh-hx-Hjv"/>
+                            <constraint firstItem="Hg4-pA-6Mb" firstAttribute="top" secondItem="ptl-2h-tca" secondAttribute="bottom" id="AiA-fw-72h"/>
+                            <constraint firstItem="K9u-TT-10X" firstAttribute="top" secondItem="Hg4-pA-6Mb" secondAttribute="bottom" id="J8k-GY-w3R"/>
                             <constraint firstItem="Hg4-pA-6Mb" firstAttribute="leading" secondItem="ZMg-xU-WJY" secondAttribute="leadingMargin" constant="-20" id="OIE-mX-cqF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Hg4-pA-6Mb" secondAttribute="trailing" constant="-20" id="nMy-XZ-6VE"/>
                             <constraint firstItem="ptl-2h-tca" firstAttribute="leading" secondItem="ZMg-xU-WJY" secondAttribute="leading" id="qNu-HW-4jc"/>
@@ -310,7 +312,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DS9-fh-QEs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="760" y="165"/>
+            <point key="canvasLocation" x="750" y="139"/>
         </scene>
         <!--Map-->
         <scene sceneID="0Xa-Ap-RjS">
@@ -329,7 +331,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJ9-Li-6Nl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="1535"/>
+            <point key="canvasLocation" x="750" y="811"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">

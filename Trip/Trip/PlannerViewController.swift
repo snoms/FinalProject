@@ -181,8 +181,16 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
                     let previewDepart = routes.first?.legs.first?.startAddress!
                     let previewArrive = routes.first?.legs.first?.endAddress
                     let previewDuration = routes.first?.legs.first?.duration?.description!
-                    let previewDepartTime = routes.first?.legs.first?.departureTime?.description!
-                    let previewArriveTime = routes.first?.legs.first?.arrivalTime?.description!
+                    var previewDepartTime = "unavailable"
+                    var previewArriveTime = "unavailable"
+                    
+                    if routes.first?.legs.first?.departureTime?.description! != nil {
+                        previewDepartTime = (routes.first?.legs.first?.departureTime?.description!)!
+                    }
+                    
+                    if routes.first?.legs.first?.arrivalTime?.description! != nil {
+                        previewArriveTime = (routes.first?.legs.first?.arrivalTime?.description!)!
+                    }
                     
                     let routeAlertPreview = UIAlertController(title: "Route suggestion", message: "Journey from:\n\(previewDepart!) \n Depart at: \(previewDepartTime) \n\nto:\n\(previewArrive!) \n Arrive at: \(previewArriveTime) \n\n Trip time: \(previewDuration!).", preferredStyle: .Alert)
                     

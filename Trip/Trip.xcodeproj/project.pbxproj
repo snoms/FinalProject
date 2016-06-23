@@ -12,7 +12,6 @@
 		CC51E22E1D103C1C00516AAE /* BadLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC51E22D1D103C1C00516AAE /* BadLocationManager.swift */; };
 		CC878BE01D06EA4100C7F394 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */; };
 		CC878BE21D06EA4100C7F394 /* PlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */; };
-		CC878BE41D06EA4100C7F394 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BE31D06EA4100C7F394 /* StatusViewController.swift */; };
 		CC878BE71D06EA4100C7F394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC878BE51D06EA4100C7F394 /* Main.storyboard */; };
 		CC878BE91D06EA4100C7F394 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC878BE81D06EA4100C7F394 /* Assets.xcassets */; };
 		CC878BEC1D06EA4100C7F394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC878BEA1D06EA4100C7F394 /* LaunchScreen.storyboard */; };
@@ -55,7 +54,6 @@
 		CC878BDC1D06EA4100C7F394 /* Trip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerViewController.swift; sourceTree = "<group>"; };
-		CC878BE31D06EA4100C7F394 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		CC878BE61D06EA4100C7F394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CC878BE81D06EA4100C7F394 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC878BEB1D06EA4100C7F394 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -145,7 +143,6 @@
 				CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */,
 				CC878C1D1D09903900C7F394 /* RouteManager.swift */,
 				CC878C1B1D098F1200C7F394 /* JourneyViewController.swift */,
-				CC878BE31D06EA4100C7F394 /* StatusViewController.swift */,
 				CC878C111D06EDF300C7F394 /* MapViewController.swift */,
 				CC878C211D09A38A00C7F394 /* journeyStepCell.swift */,
 				CC878BE51D06EA4100C7F394 /* Main.storyboard */,
@@ -378,7 +375,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC878C221D09A38A00C7F394 /* journeyStepCell.swift in Sources */,
-				CC878BE41D06EA4100C7F394 /* StatusViewController.swift in Sources */,
 				CC878C101D06EC0400C7F394 /* GoogleAPIKey.swift in Sources */,
 				CC51E22E1D103C1C00516AAE /* BadLocationManager.swift in Sources */,
 				CC878BE01D06EA4100C7F394 /* AppDelegate.swift in Sources */,

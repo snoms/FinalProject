@@ -1,4 +1,21 @@
-![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Trip_icon.png "Trip icon")
+<div id="container">
+    <img />
+	![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Trip_icon.png "Trip icon")
+</div>
+
+
+#container {
+    height:100px;
+    line-height:100px;
+}
+
+#container img {
+    vertical-align:middle;
+    max-height:100%;
+}
+
+
+<div style="text-align:center"><img src ="https://raw.githubusercontent.com/snoms/FinalProject/master/doc/Trip_icon.png" /></div>
 
 
 ## Short overview

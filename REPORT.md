@@ -1,9 +1,9 @@
-### Short overview
+## Short overview
 Trip is a lightweight public transport assistant. It shows the user an easy to read overview of the planned journey, and alerts the user when they need to make a transit movement (exiting their vehicle). 
 
 ![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Views.png "Main views of Trip")
 
-### Technical design
+## Technical design
 ##### Overview
 A route is requested through the PXGoogleDirections (PXGD) framework which returns a complex nested object containing the directions. This object is placed in a singleton (RouteManager). The framework includes the Google Maps SDK, which was also used to display the route in the Map view. [Insight into a single step of a journey.](https://github.com/snoms/FinalProject/blob/master/doc/Overly_nested_structure.png )
 
@@ -24,7 +24,7 @@ The RouteManager contains the PXGD response in the plannedRoute array, and two a
 * detectTransitStops() -> loops over the steps of the loaded route, detecting relevant transit points and creating transitFences
 * startMonitoring() -> initiates the geofences, attaching the relevant notifications to be included in the alerts triggered on entering these regions
 
-### Changes and Challenges
+## Changes and Challenges
 
 - Google maps issues. Unfortunately Apple's own MapKit does not support transit in the Netherlands, so I chose to use Google Maps, which caused some difficulties.
 - google directions API returns a highly nested JSON array. swift does not play nice with JSON with regards to the handling of optional values and dynamic JSON content, so I used the PXGoogleDirections (PXGD) framework which parses the JSON response into a very large, nested 'routes' object. Unfortunately, this framework uses an outdated version of Google Maps.
@@ -39,7 +39,7 @@ The RouteManager contains the PXGD response in the plannedRoute array, and two a
 
 
 
-### Decisions
+## Decisions
 
 - decided on a singleton (RouteManager) to manage the route early on, because extensive data retention is not needed in this application
 - 

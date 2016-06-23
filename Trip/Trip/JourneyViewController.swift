@@ -12,24 +12,7 @@ import CoreLocation
 import MapKit
 
 class JourneyViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
-    
 
-//        
-//        if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!)) {
-//            UIApplication.sharedApplication().openURL((NSURL(string:
-//                "comgooglemaps://?saddr=\(RouteManager.sharedInstance.getRoute()?.first?.path?.coordinateAtIndex(0))&daddr=,\(RouteManager.sharedInstance.getRoute()?.last?.path?.coordinateAtIndex(0))&directionsmode=transit")!))
-//            
-//        } else {
-//            NSLog("Can't use comgooglemaps://");
-//        }
-//    
-//        
-        
-        
-    
-    
-    
-    
     var plannedRoute: [PXGoogleDirectionsRoute]?
 
     @IBOutlet weak var tableView: UITableView!
@@ -91,7 +74,7 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
             return plannedRoute![0].legs[0].steps.count
         }
         else {
-            return 10
+            return 0
         }
     }
     
@@ -103,7 +86,10 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         if indexPath.row == 0 {
             cell.timeLabel.text = plannedRoute?[0].legs[0].departureTime?.description!
 //                NSDate(timeInterval: plannedRoute?[0].legs[0].departureTime?.description!)
-            // timestamp
+            // timestam
+        }
+        else if indexPath.row == (tableView.numberOfRowsInSection(0) - 1) {
+            cell.timeLabel.text = plannedRoute?[0].legs[0].arrivalTime?.description!
         }
         else {
             cell.timeLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.departureTime?.description!
@@ -158,12 +144,10 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.stepTextfield.adjustsFontSizeToFitWidth = true;
         cell.stepTextfield.font = UIFont(name: "HelveticaNeue-Thin", size: 18.0)
         
-        
         cell.motLabel.numberOfLines = 1;
         cell.motLabel.minimumScaleFactor = 8/UIFont.labelFontSize();
         cell.motLabel.adjustsFontSizeToFitWidth = true;
         cell.motLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 11.0)
-        
         
         cell.lineLabel.numberOfLines = 1;
         cell.lineLabel.minimumScaleFactor = 8/UIFont.labelFontSize();
@@ -184,10 +168,7 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.layoutMargins = UIEdgeInsetsZero
         cell.layer.cornerRadius = 5
         cell.layer.masksToBounds = true
-        
 
-        
-        
 //        cell.todoTextfield.numberOfLines = 1;
 //        cell.todoTextfield.minimumScaleFactor = 8/UIFont.labelFontSize();
 //        cell.todoTextfield.adjustsFontSizeToFitWidth = true;
@@ -244,20 +225,18 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
 
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let openGmaps = UITableViewRowAction(style: .Default, title: "Open in Maps") { (action, indexPath) in
-            // delete item at indexPath
+            // compose Apple Maps URL
+            let startLatitude = String(format: "%f", (self.plannedRoute?[0].legs[0].steps[indexPath.row].startLocation!.latitude)!)
+            let startLongitude = String(format: "%f", (self.plannedRoute?[0].legs[0].steps[indexPath.row].startLocation!.longitude)!)
+            let startString = startLatitude + "," + startLongitude
             
-            var latitude = String(format: "%f", (self.plannedRoute?[0].legs[0].steps[indexPath.row].startLocation!.latitude)!)
-            let longitude = String(format: "%f", (self.plannedRoute?[0].legs[0].steps[indexPath.row].startLocation!.longitude)!)
+            let endLatitude = String(format: "%f", (self.plannedRoute?[0].legs[0].steps[indexPath.row].endLocation!.latitude)!)
+            let endLongitude = String(format: "%f", (self.plannedRoute?[0].legs[0].steps[indexPath.row].endLocation!.longitude)!)
+            let endString = endLatitude + "," + endLongitude
             
-            let mapssstring = latitude + "," + longitude
-            
-            let mapsString = "http://maps.apple.com/?daddr=" + mapssstring
-//            let point = MKPlacemark(coordinate: plannedRoute?[0].legs[0].steps[indexPath.row]., addressDictionary: [String : AnyObject]?)
-//            let mapsString = plannedRoute?[0].legs[0].steps[indexPath.row].
+            let mapsString = "http://maps.apple.com/?daddr=" + startString + "&saddr=" + endString
+
             UIApplication.sharedApplication().openURL(NSURL(string: mapsString)!)
-//            TodoManager.sharedInstance.todolists[self.listID].removeTodo(indexPath.row)
-//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-//            TodoManager.sharedInstance.saveTodos()
         }
         
         openGmaps.backgroundColor = self.view.tintColor

@@ -4,15 +4,29 @@ Trip is a lightweight public transport assistant. It shows the user an easy to r
 ![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Views.png "Main views of Trip")
 
 ### Technical design
-- high level overview
-A route is requested through the PXGoogleDirections framework which 
+##### Overview
+A route is requested through the PXGoogleDirections (PXGD) framework which returns a complex nested object containing the directions. This object is placed in a singleton (RouteManager). The framework includes the Google Maps SDK, which was also used to display the route in the Map view. ![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Overly_nested_structure.png "Insight into a single step of a journey")
 
-- classes
+In addition to the PXGD framework, I used SwiftLocation, which is a framework that provides a singleton instance of the Apple CoreLocation Location Manager and adds several useful functions such as filtering location request responses by a certain accuracy and automating certain Region Monitoring aspects.
 
+##### Classes
+The main class which I've created is a singleton called RouteManager, which holds the PXGD response and contains several functions.
+
+#### RouteManager
+##### Data
+The RouteManager contains the PXGD response in the plannedRoute array, and two arrays of TransitFences (a transitFence holds data on a transit point on which a geofence will be based - coordinates, a radius, and a name) and fenceRegions (the actual geofence as created by the SwiftLocation singleton). 
+
+##### Methods
+*getRoute() -> returns the loaded route
+*clearRoute() -> clears the loaded route and its geofences and stops region monitoring
+*stopMonitoring() -> loops over the fences and halts monitoring
+*setRoute() -> loads a PXGD response into the singleton
+*detectTransitStops() -> loops over the steps of the loaded route, detecting relevant transit points and creating transitFences
+*startMonitoring() -> initiates the geofences, attaching the relevant notifications to be included in the alerts triggered on entering these regions
 
 ### Changes and Challenges
 
-- google maps issues. unfortunately apple's own MapKit does not have transit support for the Netherlands yet, so I chose to use Google Maps, which proved to be quite the hassle
+- Google maps issues. Unfortunately Apple's own MapKit does not support transit in the Netherlands, so I chose to use Google Maps, which caused some difficulties.
 - google directions API returns a highly nested JSON array. swift does not play nice with JSON with regards to the handling of optional values and dynamic JSON content, so I used the PXGoogleDirections (PXGD) framework which parses the JSON response into a very large, nested 'routes' object. Unfortunately, this framework uses an outdated version of Google Maps.
 - I eventually installed the PXGD framework through CocoaPods because the TA and I could not get the manual installation to work properly. This is also where the root error of my project deletion lay, as I had to use a new Xcode project to which I transferred my work by reference only. Unknowingly, from that point on I had not been committing my actual work to my Git, and as such when I deleted the old, broken Xcode project folder I cleaned out all my work. ![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Remnants_of_a_viewcontroller.png "The result of a file 'recovery' program")
 

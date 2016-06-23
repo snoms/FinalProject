@@ -1,6 +1,6 @@
 # Trip
 
-![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Trip_icon.png "Trip icon")
+![alt text](https://github.com/snoms/FinalProject/blob/master/Trip/Images/appicons/iTunesArtwork@2x.png  "Trip icon")
 
 ### Programming Project 
 

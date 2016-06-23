@@ -56,7 +56,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         return true
     }
-
+    
+    // from http://stackoverflow.com/questions/34869507/device-rotation-in-a-specific-uiviewcontroller-within-uitabbarcontroller-and-uin/34869508#34869508
+    func application (application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        return checkOrientation(self.window?.rootViewController)
+    }
+    
+    func checkOrientation (viewController: UIViewController?) -> UIInterfaceOrientationMask {
+        if viewController is PlannerViewController {
+            return UIInterfaceOrientationMask.Portrait
+            
+        } else if viewController == nil {
+            return UIInterfaceOrientationMask.All
+        }
+        else if viewController is JourneyViewController {
+            return UIInterfaceOrientationMask.All
+            
+        } else if viewController is UITabBarController {
+            if let tabBarController = viewController as? UITabBarController,
+                navigationViewControllers = tabBarController.viewControllers as? [UINavigationController] {
+                return checkOrientation(navigationViewControllers[tabBarController.selectedIndex].visibleViewController)
+            } else {
+                return UIInterfaceOrientationMask.Portrait
+            }
+            
+        } else {
+            return checkOrientation(viewController!.presentedViewController)
+        }
+    }
+    
+    
     
     // jacked from  http://stackoverflow.com/questions/24252645/how-to-get-location-user-whith-cllocationmanager-in-swift
     
@@ -149,14 +178,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    var shouldSupportAllOrientation = false
-    
-    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
-        if (shouldSupportAllOrientation == true){
-            return UIInterfaceOrientationMask.All
-        }
-        return UIInterfaceOrientationMask.Portrait
-    }
+//    var shouldSupportAllOrientation = false
+//    
+//    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+//        if (shouldSupportAllOrientation == true){
+//            return UIInterfaceOrientationMask.All
+//        }
+//        return UIInterfaceOrientationMask.Portrait
+//    }
 
     func handleRegionEvent(region: CLRegion!) {
         print("Geofence triggered!")

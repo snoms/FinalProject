@@ -61,10 +61,7 @@ class RouteManager {
     // appending the fences of the route to our array of fences
     func appendFence(transitFence: TransitFence) {
         if plannedRoute != nil {
-            print("transitfence:\(transitFence)")
-            print(RouteManager.sharedInstance.transitFences)
             RouteManager.sharedInstance.transitFences?.append(transitFence)
-            print("first fence: \(RouteManager.sharedInstance.transitFences?.first?.stop)")
         }
         else {
             print("no route to append fence")
@@ -77,12 +74,8 @@ class RouteManager {
             for (index, step) in ((getRoute()?.first!.legs.first!.steps)?.enumerate())! {
                 if step.transitDetails != nil {
                     if step.travelMode == PXGoogleDirectionsMode.Transit {
-                        print("transit point found")
-                        
                         var newRadius: CLLocationDistance = 500.00
-                        
                         let vehicleType = step.transitDetails?.line?.vehicle?.type!
-                        
                         switch vehicleType! {
                             case PXGoogleDirectionsVehicleType.CommuterTrain, PXGoogleDirectionsVehicleType.HeavyRail, PXGoogleDirectionsVehicleType.HighSpeedTrain : newRadius = 3000.00
                             case PXGoogleDirectionsVehicleType.Subway : newRadius = 1000.00
@@ -90,22 +83,6 @@ class RouteManager {
                             case PXGoogleDirectionsVehicleType.Bus : newRadius = 350.00
                             default : break
                         }
-                        
-//                        if step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.CommuterTrain || step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HeavyRail || step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HighSpeedTrain {
-//                            newRadius = 3000.00
-//                        }
-//                        
-//                        if step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Subway {
-//                            newRadius = 1000.00
-//                        }
-//                        
-//                        if step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Tram {
-//                            newRadius = 500.00
-//                        }
-//                        
-//                        if step.transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Bus {
-//                            newRadius = 400.00
-//                        }
                         
                         let newFence = TransitFence(coordinate: step.transitDetails!.arrivalStop!.location!, radius: newRadius, identifier: index, stop: (step.transitDetails!.arrivalStop?.description)!)
                         appendFence(newFence)
@@ -137,15 +114,12 @@ class RouteManager {
                             UIApplication.sharedApplication().presentLocalNotificationNow(notification)
                         }
                     }, onExit: { temp2 in
-                        print("left region \(fence.stop)")
-                        print(temp2)
                         if index == self.transitFences!.count {
                             self.stopMonitoring()
                         }
                     })
                     fenceRegions!.append(newfence)
                     try self.fenceRegions!.first?.start()
-                    print("started monitoring")
                 } catch {
                     print(error)
                 }

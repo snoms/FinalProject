@@ -33,7 +33,7 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
     let directionsAPI = PXGoogleDirections(apiKey: GoogleAPIkey)
     override func viewDidLoad() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appdelegate.shouldSupportAllOrientation = false
+//        appdelegate.shouldSupportAllOrientation = false
         
         // configure status label
         self.currentDestination.numberOfLines = 3

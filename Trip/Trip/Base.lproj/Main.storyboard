@@ -144,6 +144,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Plan route" image="plan_route_icon" id="acW-dT-cKf"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
                         <outlet property="clearButton" destination="oZp-sF-nlY" id="f3n-id-WsA"/>
                         <outlet property="currentDestination" destination="81q-Gf-tc0" id="UiV-rB-8PT"/>

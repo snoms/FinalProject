@@ -21,7 +21,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appdelegate.shouldSupportAllOrientation = true
+//        appdelegate.shouldSupportAllOrientation = true
         // Do any additional setup after loading the view, typically from a nib.
         let mapDims = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.y, width: self.view.frame.size.width, height: self.view.frame.size.height - CGRectGetHeight((self.tabBarController?.tabBar.frame)!))
         print(mapDims)

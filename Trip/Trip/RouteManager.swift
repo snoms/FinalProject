@@ -78,7 +78,7 @@ class RouteManager {
                         let vehicleType = step.transitDetails?.line?.vehicle?.type!
                         switch vehicleType! {
                             case PXGoogleDirectionsVehicleType.CommuterTrain, PXGoogleDirectionsVehicleType.HeavyRail, PXGoogleDirectionsVehicleType.HighSpeedTrain : newRadius = 3000.00
-                            case PXGoogleDirectionsVehicleType.Subway : newRadius = 1000.00
+                            case PXGoogleDirectionsVehicleType.Subway : newRadius = 700.00
                             case PXGoogleDirectionsVehicleType.Tram : newRadius = 500.00
                             case PXGoogleDirectionsVehicleType.Bus : newRadius = 350.00
                             default : break

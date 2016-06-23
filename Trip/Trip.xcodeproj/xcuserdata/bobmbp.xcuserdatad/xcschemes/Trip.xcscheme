@@ -84,7 +84,7 @@
       <AdditionalOptions>
       </AdditionalOptions>
       <LocationScenarioReference
-         identifier = "../FastTrainRoute.gpx"
+         identifier = "../GpsiesTrack-3.gpx"
          referenceType = "0">
       </LocationScenarioReference>
    </LaunchAction>

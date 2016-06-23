@@ -226,7 +226,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         if region is CLCircularRegion {
-            handleRegionEvent(region)
+//            handleRegionEvent(region)
             print("Exit")
         }
     }

@@ -11,7 +11,8 @@ import UIKit
 import CoreLocation
 
 class TransitFence {
-    // Stop is a human-readable description of the Geofence
+    
+    // stop variable is a human-readable description of the Geofence
     var coordinate: CLLocationCoordinate2D
     var radius: CLLocationDistance
     var identifier: Int

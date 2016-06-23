@@ -5,6 +5,7 @@
 //  Created by bob on 07/06/16.
 //  Copyright © 2016 bob. All rights reserved.
 //
+//  View controller for the initial view: Journey planner
 
 import UIKit
 import PXGoogleDirections
@@ -15,11 +16,8 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
 
     @IBOutlet weak var fromField: UITextField!
     @IBOutlet weak var destField: UITextField!
-    
     @IBOutlet weak var currentRoute: UILabel!
-    
     @IBOutlet weak var currentDestination: UILabel!
-    
     @IBOutlet weak var clearButton: UIButton!
     
     @IBAction func clearRoute(sender: AnyObject) {
@@ -32,16 +30,18 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
     
     let directionsAPI = PXGoogleDirections(apiKey: GoogleAPIkey)
     override func viewDidLoad() {
-        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//        appdelegate.shouldSupportAllOrientation = false
         
-        // configure status label
+        // NSNC observer to catch the region notification
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MapViewController.catchNotification(_:)) , name: "fenceProx", object: nil)
+        
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        // configure labels
         self.currentDestination.numberOfLines = 3
         self.currentDestination.minimumScaleFactor = 8/UIFont.labelFontSize()
         self.currentDestination.adjustsFontSizeToFitWidth = true
         self.currentDestination.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
         self.currentDestination.text = "No route loaded!"
-        
         hideRouteInfo()
         fromField.delegate = self
         destField.delegate = self
@@ -58,23 +58,16 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
         
         // request location and use it as default departure location if response is ok
         getLocation()
-        print("Loaded")
         super.viewDidLoad()
     }
     
     func showRouteInfo() {
-//        currentDestination.hidden = false
-//        currentRoute.hidden = false
-//        clearButton.hidden = false
         if RouteManager.sharedInstance.getRoute() != nil {
             clearButton.enabled = true
         }
     }
     
     func hideRouteInfo() {
-//        currentDestination.hidden = true
-//        currentRoute.hidden = true
-//        clearButton.hidden = true
         clearButton.enabled = false
     }
     
@@ -85,45 +78,6 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-//
-//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-//        if status == .AuthorizedAlways {
-//            print("reached first if block")
-////            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-////                print("reached second if block")
-////                if CLLocationManager.isRangingAvailable() {
-////                    print("reached third if block")
-////                    if let location1: CLLocation! = locationManager.location {
-////                        print("reached inner if block")
-////                        let coordinate1: CLLocationCoordinate2D = location1.coordinate
-////                        // ... proceed with the location and coordintes
-////                        directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
-////                    } else {
-////                        print("no location...")
-//////                    }
-//////                }
-////            }
-//        }
-//    }
-////    
-////    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        let location1:CLLocationCoordinate2D = (locations.last?.coordinate)!
-//        print("locations = \(location1.latitude) \(location1.longitude)")
-//        if let location1: CLLocation! = locationManager.location {
-//            print("reached inner if block")
-//            let coordinate1: CLLocationCoordinate2D = location1!.coordinate
-//            // ... proceed with the location and coordintes
-//            directionsAPI.from = PXLocation.CoordinateLocation(coordinate1)
-//        } else {
-//            print("no location...")
-//            //                    }
-//            //                }
-//        }
-//    }
-    
-    func getCoreLocation() {
-        
     }
 
     func getLocation() {
@@ -140,7 +94,6 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
     }
     
     @IBAction func planTrip(sender: AnyObject) {
-        
         // if departure field is not empty, use that text as departure point
         if fromField.text == "" {
             // if location not filled in yet, retry location
@@ -158,7 +111,6 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
             let alert = UIAlertController(title: "Error", message: "Destination field may not be empty", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
-            print("error: must enter destination")
         }
         else {
             // time to retrieve directions
@@ -172,12 +124,10 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
                     let alert = UIAlertController(title: "Error", message: "Could not get route from Google", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
-                    print("error: must enter destination")
                     break
                     
                 // route retrieved, show rejectable route preview to user
                 case let .Success(request, routes):
-                    print("route found")
                     let previewDepart = routes.first?.legs.first?.startAddress!
                     let previewArrive = routes.first?.legs.first?.endAddress
                     let previewDuration = routes.first?.legs.first?.duration?.description!
@@ -202,7 +152,6 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
                         RouteManager.sharedInstance.setRoute(routes)
                         self.showRouteInfo()
                         self.currentDestination.text = RouteManager.sharedInstance.getRoute()!.first?.legs.first?.endAddress
-    //                    self.openInGmapsButton.enabled = true
                     }
                     
                     // make cancel button
@@ -218,6 +167,19 @@ class PlannerViewController: UIViewController, CLLocationManagerDelegate, UIText
                 }
             })
         }
+    }
+    
+    // method to present alert on receiving any NSNotification
+    func catchNotification(notification:NSNotification) -> Void {
+        guard let userInfo = notification.userInfo,
+            let message  = userInfo["message"] as? String else {
+                return
+        }
+        let alert = UIAlertController(title: "Wake up!",
+                                      message:"You are approaching: \(message). Prepare to disembark!",
+                                      preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

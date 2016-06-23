@@ -18,34 +18,16 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
-
-        super.viewDidLoad()
-        
-//        if (RouteManager.sharedInstance.getRoute() != nil) {
-//            plannedRoute = RouteManager.sharedInstance.getRoute()
-//            print("ok")
-//            for routeleg in plannedRoute![0].legs[0].steps {
-//                //                    print(routeleg.transitDetails)
-//                //                    print(routeleg.description)
-//                print(routeleg.htmlInstructions!)
-//                print(plannedRoute![0].legs[0].steps.count)
-//                print(plannedRoute?.description)
-//            }
-//            
-//        }
-//        else {
-//            print("error in viewdidload if let")
-//        }
-        
+        // NSNC observer to catch the region notification
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JourneyViewController.catchNotification(_:)) , name: "fenceProx", object: nil)
         loadData()
         tableView.reloadData()
+        super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
         loadData()
         tableView.reloadData()
-        print("viewa ppeared")
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,7 +38,6 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
     func loadData() {
         if RouteManager.sharedInstance.getRoute() != nil {
             plannedRoute = RouteManager.sharedInstance.getRoute()
-            print("route loaded")
         }
         else {
             print("error, no route available yet")
@@ -80,13 +61,10 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-//        if plannedRoute != nil {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("journeyStepCell", forIndexPath: indexPath) as! journeyStepCell
         
         if indexPath.row == 0 {
             cell.timeLabel.text = plannedRoute?[0].legs[0].departureTime?.description!
-//                NSDate(timeInterval: plannedRoute?[0].legs[0].departureTime?.description!)
-            // timestam
         }
         else if indexPath.row == (tableView.numberOfRowsInSection(0) - 1) {
             cell.timeLabel.text = plannedRoute?[0].legs[0].arrivalTime?.description!
@@ -98,16 +76,6 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.stepTextfield.text = plannedRoute?[0].legs[0].steps[indexPath.row].htmlInstructions!
         cell.motLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.name!
         cell.lineLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.shortName!
-
-//        cell.trackLabel.text = plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails.
-        
-//        if RouteManager.sharedInstance.getRoute().first.legs.first.steps[indexPath.row].travelMode? == "Walking" {
-//            
-        
-////        if plannedRoute![0].legs[0].steps[indexPath.row].travelMode? == "Walking" {
-//            cell.motImage.image = UIImage(named: "walking")
-//        }
-        
         
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails == nil {
             cell.motImage.image = UIImage(named: "walking")
@@ -117,27 +85,22 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.CommuterTrain || plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HeavyRail || plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.HighSpeedTrain {
             cell.motImage.image = UIImage(named: "train")
             cell.backgroundColor = UIColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.075)
-
         }
 
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Subway {
             cell.motImage.image = UIImage(named: "subway")
             cell.backgroundColor = UIColor.init(red: 0.3, green: 0.2, blue: 0.0, alpha: 0.075)
-
         }
         
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Tram {
             cell.motImage.image = UIImage(named: "tram")
             cell.backgroundColor = UIColor.init(red: 0.2, green: 0.0, blue: 0.2, alpha: 0.075)
-
         }
         
         if plannedRoute?[0].legs[0].steps[indexPath.row].transitDetails?.line?.vehicle?.type! == PXGoogleDirectionsVehicleType.Bus {
             cell.motImage.image = UIImage(named: "bus")
             cell.backgroundColor = UIColor.init(red: 0.0, green: 0.2, blue: 0.8, alpha: 0.075)
-
         }
-        
         
         cell.stepTextfield.numberOfLines = 2;
         cell.stepTextfield.minimumScaleFactor = 8/UIFont.labelFontSize();
@@ -159,55 +122,14 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.timeLabel.adjustsFontSizeToFitWidth = true;
         cell.timeLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 14.0)
         
-//        cell.trackLabel.numberOfLines = 1;
-//        cell.trackLabel.minimumScaleFactor = 8/UIFont.labelFontSize();
-//        cell.trackLabel.adjustsFontSizeToFitWidth = true;
-//        cell.trackLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 11.0)
-//        
-        
         cell.layoutMargins = UIEdgeInsetsZero
         cell.layer.cornerRadius = 5
         cell.layer.masksToBounds = true
 
-//        cell.todoTextfield.numberOfLines = 1;
-//        cell.todoTextfield.minimumScaleFactor = 8/UIFont.labelFontSize();
-//        cell.todoTextfield.adjustsFontSizeToFitWidth = true;
-//        cell.todoTextfield.font = UIFont(name: "HelveticaNeue-Thin", size: 18.0)
-//        cell.layoutMargins = UIEdgeInsetsZero
-//        cell.layer.cornerRadius = 5
-//        cell.layer.masksToBounds = true
-//        if TodoManager.sharedInstance.todolists[listID].getTodos()[indexPath.row].getStatus() {
-//            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-//            cell.backgroundColor = completedColor
-//        }
-//        else {
-//            cell.accessoryType = UITableViewCellAccessoryType.None
-//            cell.backgroundColor = clearColor
-//        }
         return cell
-        }
-//        else {
-//            print("error in cell creation")
-//            return
-//        }
+    }
     
-    
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//        let cell = tableView.cellForRowAtIndexPath(indexPath)
-//        let todo = TodoManager.sharedInstance.todolists[listID].getTodos()[indexPath.row]
-//        todo.toggleStatus()
-//        if todo.getStatus() {
-//            cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
-//            cell?.backgroundColor = completedColor
-//        }
-//        else {
-//            cell?.accessoryType = UITableViewCellAccessoryType.None
-//            cell?.backgroundColor = clearColor
-//        }
-//        TodoManager.sharedInstance.saveTodos()
-//    }
-    
+    // method to present alert on receiving any NSNotification
     func catchNotification(notification:NSNotification) -> Void {
         print("Catch notification")
         
@@ -238,12 +160,7 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
 
             UIApplication.sharedApplication().openURL(NSURL(string: mapsString)!)
         }
-        
         openGmaps.backgroundColor = self.view.tintColor
-        
         return [openGmaps]
     }
-    
-    
-
 }

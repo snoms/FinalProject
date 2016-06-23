@@ -15,28 +15,24 @@ import IQKeyboardManagerSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
-    
     var window: UIWindow?
     var newlocationManager: CLLocationManager!
     var seenError : Bool = false
     var locationFixAchieved : Bool = false
     var locationStatus : NSString = "Not Started"
     
-    
-//    let locationManager = CLLocationManager()
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // provide the Google API key for the Google Maps Service
         GMSServices.provideAPIKey(GoogleAPIkey)
         
+        // enable IQ Keyboard manager
         IQKeyboardManager.sharedManager().enable = true
         
+        // initialize location manager
         initLocationManager()
         
-        
-        
-        
-        // http://stackoverflow.com/questions/33008072/register-notification-in-ios-9
+        // from http://stackoverflow.com/questions/33008072/register-notification-in-ios-9
         if application.respondsToSelector("registerUserNotificationSettings:") {
             if #available(iOS 8.0, *) {
                 let types:UIUserNotificationType = ([.Alert, .Sound])
@@ -84,10 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             return checkOrientation(viewController!.presentedViewController)
         }
     }
-    
-    
-    
-    // jacked from  http://stackoverflow.com/questions/24252645/how-to-get-location-user-whith-cllocationmanager-in-swift
+
+    // Location manager from  http://stackoverflow.com/questions/24252645/how-to-get-location-user-whith-cllocationmanager-in-swift
     
     func initLocationManager() {
         seenError = false
@@ -98,8 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         newlocationManager.desiredAccuracy = kCLLocationAccuracyBest
         newlocationManager.requestAlwaysAuthorization()
     }
-    
-    
+
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         newlocationManager.stopUpdatingLocation()
         if ((error) != nil) {
@@ -113,9 +106,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [CLLocation]) {
         if (locationFixAchieved == false) {
             locationFixAchieved = true
-            var locationArray = locations as NSArray
-            var locationObj = locationArray.lastObject as! CLLocation
-            var coord = locationObj.coordinate
+            let locationArray = locations as NSArray
+            let locationObj = locationArray.lastObject as! CLLocation
+            let coord = locationObj.coordinate
             
             print(coord.latitude)
             print(coord.longitude)
@@ -125,7 +118,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!,
                          didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         var shouldIAllow = false
-        
         switch status {
         case CLAuthorizationStatus.Restricted:
             locationStatus = "Restricted Access to location"
@@ -156,9 +148,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
         LocationManager.shared.allowsBackgroundEvents = true
-//        var locations = CLLocation()
-
         LocationManager.shared.observeLocations(.Block, frequency: .Continuous, onSuccess: { (location) in
             print("background monitored: \(location)")
             }) { (error) in
@@ -179,19 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         RouteManager.sharedInstance.clearRoute()
     }
 
-//    var shouldSupportAllOrientation = false
-//    
-//    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
-//        if (shouldSupportAllOrientation == true){
-//            return UIInterfaceOrientationMask.All
-//        }
-//        return UIInterfaceOrientationMask.Portrait
-//    }
-
     func handleRegionEvent(region: CLRegion!) {
-        print("Geofence triggered!")
-        print(region.identifier)
-        
         if UIApplication.sharedApplication()
             .applicationState != UIApplicationState.Active {
             let notification = UILocalNotification()
@@ -205,30 +184,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             let nc = NSNotificationCenter.defaultCenter()
             nc.postNotificationName("fenceProx", object: nil, userInfo: ["message":region.identifier])
         }
-    
     }
-    
-//    func regionWithGeotification(geotification: TransitFence) -> CLCircularRegion {
-//        // 1
-//        let region = CLCircularRegion(center: geotification.coordinate, radius: geotification.radius, identifier: geotification.stop)
-//        // 2
-////        region.notifyOnEntry = (geotification.eventType == .OnEntry)
-//        region.notifyOnExit = !region.notifyOnEntry
-//        return region
-//    }
     
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if region is CLCircularRegion {
             handleRegionEvent(region)
-            
             print("Entered")
         }
     }
     
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         if region is CLCircularRegion {
-//            handleRegionEvent(region)
-            print("Exit")
+            print("Region Exited")
         }
     }
 }

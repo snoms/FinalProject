@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B63725CCB1346A6BCC8E4BF7 /* Pods_Trip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79EE9FCC3299E4039DD5349F /* Pods_Trip.framework */; };
 		CC51E22C1D102B2E00516AAE /* TransitFence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC51E22B1D102B2E00516AAE /* TransitFence.swift */; };
-		CC51E22E1D103C1C00516AAE /* BadLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC51E22D1D103C1C00516AAE /* BadLocationManager.swift */; };
 		CC878BE01D06EA4100C7F394 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */; };
 		CC878BE21D06EA4100C7F394 /* PlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */; };
 		CC878BE71D06EA4100C7F394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC878BE51D06EA4100C7F394 /* Main.storyboard */; };
@@ -50,7 +49,6 @@
 		93EE7837169C5E1832886480 /* Pods-Trip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trip/Pods-Trip.debug.xcconfig"; sourceTree = "<group>"; };
 		CC51E2271D0DA7C300516AAE /* GooglePlacesAutocomplete.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlacesAutocomplete.framework; path = "Pods/../build/Debug-iphoneos/GooglePlacesAutocomplete/GooglePlacesAutocomplete.framework"; sourceTree = "<group>"; };
 		CC51E22B1D102B2E00516AAE /* TransitFence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitFence.swift; sourceTree = "<group>"; };
-		CC51E22D1D103C1C00516AAE /* BadLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadLocationManager.swift; sourceTree = "<group>"; };
 		CC878BDC1D06EA4100C7F394 /* Trip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerViewController.swift; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 			isa = PBXGroup;
 			children = (
 				CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */,
-				CC51E22D1D103C1C00516AAE /* BadLocationManager.swift */,
 				CC51E22B1D102B2E00516AAE /* TransitFence.swift */,
 				CC878C0F1D06EC0400C7F394 /* GoogleAPIKey.swift */,
 				CC878BE11D06EA4100C7F394 /* PlannerViewController.swift */,
@@ -376,7 +373,6 @@
 			files = (
 				CC878C221D09A38A00C7F394 /* journeyStepCell.swift in Sources */,
 				CC878C101D06EC0400C7F394 /* GoogleAPIKey.swift in Sources */,
-				CC51E22E1D103C1C00516AAE /* BadLocationManager.swift in Sources */,
 				CC878BE01D06EA4100C7F394 /* AppDelegate.swift in Sources */,
 				CC878C121D06EDF300C7F394 /* MapViewController.swift in Sources */,
 				CC878BE21D06EA4100C7F394 /* PlannerViewController.swift in Sources */,

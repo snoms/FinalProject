@@ -5,7 +5,7 @@
       location = "group:Dir.gpx">
    </FileRef>
    <FileRef
-      location = "group:GpsiesTrack-3.gpx">
+      location = "group:/Users/bobmbp/Dropbox/FinalProject/Trip/FastBusSubwayRoute.gpx">
    </FileRef>
    <FileRef
       location = "group:GpsiesTrack-2.gpx">

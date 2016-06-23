@@ -14,7 +14,7 @@ The main class which I've created is a singleton called RouteManager, which hold
 
 #### RouteManager
 ##### Data
-The RouteManager contains the PXGD response in the plannedRoute array, and two arrays of TransitFences (a transitFence holds data on a transit point on which a geofence will be based - coordinates, a radius, and a name) and fenceRegions (the actual geofence as created by the SwiftLocation singleton). 
+The RouteManager contains the PXGD response in the plannedRoute array, and two arrays: **TransitFences** (a transitFence holds data on a transit point on which a geofence will be based - coordinates, a radius, and a name) and **fenceRegions** (the actual geofence as created by the SwiftLocation singleton). 
 
 ##### Methods
 * getRoute() -> returns the loaded route

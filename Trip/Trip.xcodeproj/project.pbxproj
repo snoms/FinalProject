@@ -47,7 +47,6 @@
 		758EB00DB663DEF6CD6209FB /* Pods-Trip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trip/Pods-Trip.release.xcconfig"; sourceTree = "<group>"; };
 		79EE9FCC3299E4039DD5349F /* Pods_Trip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93EE7837169C5E1832886480 /* Pods-Trip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trip/Pods-Trip.debug.xcconfig"; sourceTree = "<group>"; };
-		CC51E2271D0DA7C300516AAE /* GooglePlacesAutocomplete.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlacesAutocomplete.framework; path = "Pods/../build/Debug-iphoneos/GooglePlacesAutocomplete/GooglePlacesAutocomplete.framework"; sourceTree = "<group>"; };
 		CC51E22B1D102B2E00516AAE /* TransitFence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitFence.swift; sourceTree = "<group>"; };
 		CC878BDC1D06EA4100C7F394 /* Trip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC878BDF1D06EA4100C7F394 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -171,7 +170,6 @@
 		E46FCD95A76C6C3769C15BA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CC51E2271D0DA7C300516AAE /* GooglePlacesAutocomplete.framework */,
 				CC8C217F1D0D9DFE004BEC21 /* GoogleMaps.bundle */,
 				CC8C217D1D0D9BE4004BEC21 /* GoogleMaps.framework */,
 				CC878C151D06F7BF00C7F394 /* PXGoogleDirections.framework */,

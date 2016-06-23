@@ -92,20 +92,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current destination:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UwV-7M-85g">
-                                <rect key="frame" x="225" y="160" width="150" height="21"/>
+                                <rect key="frame" x="208" y="159" width="150" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="uf3-W4-R8t"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81q-Gf-tc0">
-                                <rect key="frame" x="212" y="188" width="158" height="41"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="158" id="eIX-Pf-45k"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -116,31 +107,40 @@
                                     <action selector="clearRoute:" destination="9pv-A4-QxB" eventType="touchUpInside" id="aTh-DQ-G5b"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="81q-Gf-tc0">
+                                <rect key="frame" x="208" y="188" width="158" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="158" id="eIX-Pf-45k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="WsD-4b-GEO" secondAttribute="bottom" constant="30" id="1Ea-PF-Fgv"/>
                             <constraint firstItem="xNa-aZ-ihZ" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="7yj-MO-tO3"/>
                             <constraint firstItem="vNn-C0-nhf" firstAttribute="top" secondItem="xNa-aZ-ihZ" secondAttribute="bottom" constant="8" symbolic="YES" id="Dyq-Ca-iIh"/>
-                            <constraint firstItem="81q-Gf-tc0" firstAttribute="trailing" secondItem="xNa-aZ-ihZ" secondAttribute="trailing" id="IU9-fw-15G"/>
+                            <constraint firstItem="81q-Gf-tc0" firstAttribute="trailing" secondItem="xNa-aZ-ihZ" secondAttribute="trailing" constant="-4" id="IU9-fw-15G"/>
                             <constraint firstItem="gR8-0x-heS" firstAttribute="centerX" secondItem="Kbu-ZS-1fg" secondAttribute="centerX" id="K6a-72-PSy"/>
                             <constraint firstItem="Kbu-ZS-1fg" firstAttribute="trailing" secondItem="CwF-9Y-3vL" secondAttribute="trailing" id="KAj-4r-WvP"/>
                             <constraint firstItem="81q-Gf-tc0" firstAttribute="centerY" secondItem="oZp-sF-nlY" secondAttribute="centerY" id="RLw-Mv-slY"/>
                             <constraint firstItem="CwF-9Y-3vL" firstAttribute="centerX" secondItem="WsD-4b-GEO" secondAttribute="centerX" id="TEH-1B-ijj"/>
                             <constraint firstItem="Kbu-ZS-1fg" firstAttribute="leading" secondItem="CwF-9Y-3vL" secondAttribute="leading" id="Tkc-U9-ihE"/>
                             <constraint firstItem="oZp-sF-nlY" firstAttribute="top" secondItem="vNn-C0-nhf" secondAttribute="bottom" constant="82" id="Wtr-fW-b0a"/>
-                            <constraint firstItem="UwV-7M-85g" firstAttribute="top" secondItem="vNn-C0-nhf" secondAttribute="bottom" constant="48" id="XTd-mR-mPu"/>
+                            <constraint firstItem="UwV-7M-85g" firstAttribute="top" secondItem="vNn-C0-nhf" secondAttribute="bottom" constant="47" id="XTd-mR-mPu"/>
                             <constraint firstItem="a8O-DI-OrW" firstAttribute="centerX" secondItem="CwF-9Y-3vL" secondAttribute="centerX" id="YDd-Na-DuJ"/>
-                            <constraint firstItem="UwV-7M-85g" firstAttribute="centerX" secondItem="vNn-C0-nhf" secondAttribute="centerX" id="ZW8-sX-fve"/>
+                            <constraint firstItem="UwV-7M-85g" firstAttribute="centerX" secondItem="vNn-C0-nhf" secondAttribute="centerX" constant="-17" id="ZW8-sX-fve"/>
                             <constraint firstItem="oZp-sF-nlY" firstAttribute="trailing" secondItem="Kbu-ZS-1fg" secondAttribute="trailing" id="cKT-jt-g7q"/>
                             <constraint firstItem="xNa-aZ-ihZ" firstAttribute="centerX" secondItem="vNn-C0-nhf" secondAttribute="centerX" id="cR0-oV-boD"/>
                             <constraint firstItem="Kbu-ZS-1fg" firstAttribute="top" secondItem="gR8-0x-heS" secondAttribute="bottom" constant="8" symbolic="YES" id="cxf-f2-bSk"/>
                             <constraint firstItem="xNa-aZ-ihZ" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="ecl-WE-apy"/>
                             <constraint firstItem="a8O-DI-OrW" firstAttribute="top" secondItem="Kbu-ZS-1fg" secondAttribute="bottom" constant="30" id="exp-gT-myv"/>
                             <constraint firstItem="WsD-4b-GEO" firstAttribute="top" secondItem="CwF-9Y-3vL" secondAttribute="bottom" constant="8" symbolic="YES" id="i8f-ys-Qlb"/>
-                            <constraint firstItem="81q-Gf-tc0" firstAttribute="top" secondItem="UwV-7M-85g" secondAttribute="bottom" constant="7" id="rTl-Az-VSJ"/>
+                            <constraint firstItem="81q-Gf-tc0" firstAttribute="top" secondItem="UwV-7M-85g" secondAttribute="bottom" constant="8" id="rTl-Az-VSJ"/>
                             <constraint firstItem="CwF-9Y-3vL" firstAttribute="top" secondItem="a8O-DI-OrW" secondAttribute="bottom" constant="8" symbolic="YES" id="wys-dJ-NG7"/>
-                            <constraint firstItem="UwV-7M-85g" firstAttribute="centerX" secondItem="gR8-0x-heS" secondAttribute="centerX" id="yy8-0U-1Co"/>
+                            <constraint firstItem="UwV-7M-85g" firstAttribute="centerX" secondItem="gR8-0x-heS" secondAttribute="centerX" constant="-16.5" id="yy8-0U-1Co"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Plan route" image="plan_route_icon" id="acW-dT-cKf"/>

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Trip/RouteManager.swift"
-            timestampString = "488389311.461451"
+            timestampString = "488410323.739838"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "detectTransitStops()"
             landmarkType = "5">
          </BreakpointContent>

@@ -5,6 +5,10 @@
 //  Created by bob on 09/06/16.
 //  Copyright © 2016 bob. All rights reserved.
 //
+//  View controller for Journey overview. Contains a table view with
+//  the steps of the journey and allows users to open that step in 
+//  the iOS Maps application.
+// 
 
 import UIKit
 import PXGoogleDirections
@@ -144,7 +148,8 @@ class JourneyViewController: UIViewController, UITableViewDataSource, UITableVie
         alert.addAction(UIAlertAction(title: "Got it!", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
+    
+    // method to open the selected journey step cell instructions in Maps
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let openGmaps = UITableViewRowAction(style: .Default, title: "Open in Maps") { (action, indexPath) in
             // compose Apple Maps URL

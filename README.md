@@ -12,7 +12,7 @@ A public transportation app which offers live guidance to travellers unfamiliar 
 ![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Views.png "Main views of Trip")
 
 ### Description
-For this project I created a public transport (PT) assistance application. Current popular PT apps offer robust guidance, but lack in real-time assistance during the trip. This interaction gap is especially problematic for travellers unknown with the itinerary, such as tourists or simply people unknown with that specific route. Most notably, knowing when to prepare for leaving the vehicle or requesting a stop is often confusing. Here I will empower environment-naive users with the comfort locals enjoy through their familiarity with their city by using their geolocation to track their PT vehicle and inform them of upcoming changes (e.g. Press Stop Now and exit your Tram # at the next stop).
+For this project I created a public transport (PT) assistance application. Current popular PT apps offer robust guidance, but lack in real-time assistance during the trip. This interaction gap is especially problematic for travellers unknown with the itinerary, such as tourists or simply people unknown with that specific route. Most notably, knowing when to prepare for leaving the vehicle or requesting a stop is often confusing. Here I will empower environment-naive users with the comfort locals enjoy through their familiarity with their city by using their geolocation to track their PT vehicle and inform them of upcoming changes.
 
 ### Components
 

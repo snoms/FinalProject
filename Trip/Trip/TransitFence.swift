@@ -6,12 +6,12 @@
 //  Copyright © 2016 bob. All rights reserved.
 //
 //  Defines the TransitFence class which holds coordinates for the Geofence
+//
 
 import UIKit
 import CoreLocation
 
 class TransitFence {
-    
     // stop variable is a human-readable description of the Geofence
     var coordinate: CLLocationCoordinate2D
     var radius: CLLocationDistance

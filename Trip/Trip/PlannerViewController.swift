@@ -6,6 +6,7 @@
 //  Copyright © 2016 bob. All rights reserved.
 //
 //  View controller for the initial view: Journey planner
+// 
 
 import UIKit
 import PXGoogleDirections

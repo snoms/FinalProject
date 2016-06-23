@@ -2,13 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Dir.gpx">
-   </FileRef>
-   <FileRef
       location = "group:/Users/bobmbp/Dropbox/FinalProject/Trip/FastBusSubwayRoute.gpx">
-   </FileRef>
-   <FileRef
-      location = "group:GpsiesTrack-2.gpx">
    </FileRef>
    <FileRef
       location = "group:FastTrainRoute.gpx">

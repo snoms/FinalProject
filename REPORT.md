@@ -28,7 +28,7 @@ The RouteManager contains the PXGD response in the plannedRoute array, and two a
 * startMonitoring() -> initiates the geofences, attaching the relevant notifications to be included in the alerts triggered on entering these regions
 
 ## Changes and Challenges
-- Google maps issues. Unfortunately Apple's own MapKit does not support transit in the Netherlands, so I chose to use Google Maps, which caused some difficulties.
+- Google Maps issues. Unfortunately Apple's own MapKit does not support transit in the Netherlands, so I chose to use Google Maps, which caused some difficulties.
 - The Google Directions API returns a highly nested JSON array. Swift does not play nice with JSON with regards to the handling of optional values and dynamic JSON content, so I used the PXGoogleDirections (PXGD) framework which parses the JSON response into a very large, nested 'routes' object. Unfortunately, this framework uses an outdated version of Google Maps.
 - I eventually installed the PXGD framework through CocoaPods because the TA and I could not get the manual installation to work properly. This is also where the root error of my project deletion lay, as I had to use a new Xcode project to which I transferred my work by reference only. Unknowingly, from that point on I had not been committing my actual work to my Git, and as such when I deleted the old, broken Xcode project folder I cleaned out all my work. This has unfortunately forced me to reduce the scope of this project. ![alt text](https://github.com/snoms/FinalProject/blob/master/doc/Remnants_of_a_viewcontroller.png "The result of a file 'recovery' program")
 - Near the end of the project I ran into some difficulty with the SwiftLocation framework. I fell back on the native CoreLocation functionality, but this leads to some duplicate location reporting and increased battery usage. It should be fixed in future versions.
@@ -44,7 +44,8 @@ The RouteManager contains the PXGD response in the plannedRoute array, and two a
 
 - There are some issues with correctly stopping region monitoring for a geofence.
 - Background (and most notably during subway transit) location accuracy is sometimes problematically inaccurate, leading to false triggers of regions. This is something that would have been solved elegantly if a fallback to the real-time public transport data had been implemented during low-accuracy location situations, or lengthy steps during a journey where intensive location monitoring is unnecessary.
-
+- Notifications are sent twice.
+- Sometimes location services become unavailable during simulation. This appears to be a problem with the simulator.
 
 ### Credits
 
@@ -52,7 +53,7 @@ Frameworks:
 
 PXGoogleDirections
 SwiftLocation
-IQKeyboardSwift
+IQKeyboardManagerSwift
 Google Maps
 
 <div>Icons made by <a href="http://www.flaticon.com/authors/scott-de-jonge" title="Scott de Jonge">Scott de Jonge</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>

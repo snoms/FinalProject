@@ -5,6 +5,11 @@
 //  Created by bob on 09/06/16.
 //  Copyright © 2016 bob. All rights reserved.
 //
+//  Singleton class serving as route manager. A route is loaded in
+//  and subsequently available throughout the application. Provides
+//  several methods which implement region monitoring functionality
+//  for journey points of interest.
+//
 
 import Foundation
 import PXGoogleDirections
